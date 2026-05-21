@@ -3,22 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tota Labs — iOS Developer</title>
-  <meta name="description" content="iOS developer building apps & tools. Turning interesting ideas into products.">
+  <title>Tota Labs — Indie iOS Developer</title>
+  <meta name="description" content="Turning random ideas into apps. iOS apps and tools by Tota Labs.">
+  <link rel="icon" href="logo.png" type="image/png">
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --bg:        #0a0e1a;
-      --surface:   rgba(255,255,255,0.03);
-      --surface-h: rgba(255,255,255,0.06);
-      --border:    rgba(255,255,255,0.08);
-      --border-h:  rgba(255,255,255,0.16);
-      --accent:    #E8C040;
-      --text:      #f0f0f0;
-      --muted:     #8a8f9c;
-      --faint:     #555a66;
+      --bg:         #0a0e1a;
+      --bg-2:       #0d1220;
+      --surface:    rgba(255,255,255,0.035);
+      --surface-h:  rgba(255,255,255,0.065);
+      --border:     rgba(255,255,255,0.08);
+      --border-h:   rgba(255,255,255,0.18);
+      --accent:     #E8C040;
+      --accent-2:   #8b6cf6;
+      --text:       #f2f2f4;
+      --muted:      #8a8f9c;
+      --faint:      #555a66;
     }
+
+    html { scroll-behavior: smooth; }
 
     body {
       background: var(--bg);
@@ -27,32 +32,52 @@
       line-height: 1.6;
       min-height: 100vh;
       background-image:
-        radial-gradient(ellipse 60% 30% at 20% 0%, rgba(232,192,64,0.05) 0%, transparent 70%);
+        radial-gradient(ellipse 50% 35% at 15% 0%, rgba(232,192,64,0.07) 0%, transparent 65%),
+        radial-gradient(ellipse 40% 30% at 90% 100%, rgba(139,108,246,0.06) 0%, transparent 65%);
+      background-attachment: fixed;
     }
 
     .layout {
-      max-width: 1200px;
+      max-width: 1180px;
       margin: 0 auto;
-      padding: 4rem 2rem;
+      padding: 4.5rem 2rem 6rem;
       display: grid;
-      grid-template-columns: 280px 1fr;
+      grid-template-columns: 300px 1fr;
       gap: 5rem;
     }
 
     /* ── SIDEBAR ── */
     .sidebar {
       position: sticky;
-      top: 4rem;
+      top: 4.5rem;
       align-self: start;
     }
+
+    .avatar-wrap {
+      position: relative;
+      width: 104px;
+      height: 104px;
+      margin-bottom: 1.75rem;
+    }
+    .avatar-wrap::before {
+      content: '';
+      position: absolute;
+      inset: -8px;
+      border-radius: 50%;
+      background: conic-gradient(from 180deg, rgba(232,192,64,0.45), rgba(139,108,246,0.35), rgba(232,192,64,0.45));
+      filter: blur(14px);
+      opacity: 0.55;
+      z-index: 0;
+    }
     .avatar {
-      width: 96px;
-      height: 96px;
+      position: relative;
+      width: 100%;
+      height: 100%;
       border-radius: 50%;
       overflow: hidden;
-      margin-bottom: 1.75rem;
-      border: 1px solid var(--border);
+      border: 1px solid var(--border-h);
       background: #fff;
+      z-index: 1;
     }
     .avatar img {
       width: 100%;
@@ -60,48 +85,88 @@
       object-fit: cover;
       display: block;
     }
+
     .name {
-      font-size: 1.6rem;
+      font-size: 1.75rem;
       font-weight: 700;
-      letter-spacing: -0.5px;
+      letter-spacing: -0.6px;
       margin-bottom: 0.25rem;
+      background: linear-gradient(135deg, #fff 0%, #bcbfc9 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
     .role {
-      font-size: 0.95rem;
-      color: var(--muted);
-      margin-bottom: 1.5rem;
-    }
-    .bio {
       font-size: 0.92rem;
       color: var(--muted);
-      line-height: 1.65;
-      margin-bottom: 2rem;
-    }
-
-    /* Social text links */
-    .links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1.25rem;
       margin-bottom: 1.25rem;
-    }
-    .links a {
-      color: var(--text);
-      text-decoration: none;
-      font-size: 0.92rem;
-      font-weight: 500;
-      transition: color 0.2s;
       display: inline-flex;
       align-items: center;
-      gap: 0.45rem;
+      gap: 0.5rem;
     }
-    .links a svg { flex-shrink: 0; opacity: 0.85; }
-    .links a:hover { color: var(--accent); }
-    .links a:hover svg { opacity: 1; }
+    .role::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #34d399;
+      box-shadow: 0 0 8px rgba(52,211,153,0.6);
+      animation: pulse 2.5s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.55; transform: scale(0.85); }
+    }
+    .bio {
+      font-size: 0.95rem;
+      color: var(--muted);
+      line-height: 1.65;
+      margin-bottom: 1.75rem;
+    }
+
+    /* Vertical link pills */
+    .links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+      margin-bottom: 1.5rem;
+    }
+    .link-pill {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.7rem 0.95rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: all 0.2s;
+      position: relative;
+    }
+    .link-pill svg { flex-shrink: 0; opacity: 0.8; transition: opacity 0.2s; }
+    .link-pill .label { flex: 1; }
+    .link-pill .arrow {
+      font-size: 0.8rem;
+      color: var(--faint);
+      transition: transform 0.2s, color 0.2s;
+    }
+    .link-pill:hover {
+      background: var(--surface-h);
+      border-color: var(--border-h);
+      transform: translateX(2px);
+    }
+    .link-pill:hover svg { opacity: 1; color: var(--accent); }
+    .link-pill:hover .arrow {
+      transform: translateX(3px);
+      color: var(--accent);
+    }
 
     .secondary-links {
       display: flex;
-      gap: 1.5rem;
+      gap: 1.25rem;
+      padding-top: 0.5rem;
     }
     .secondary-links a {
       color: var(--muted);
@@ -117,10 +182,20 @@
     /* ── MAIN ── */
     .main { min-width: 0; }
     .section-title {
-      font-size: 1.4rem;
+      font-size: 1.45rem;
       font-weight: 700;
       letter-spacing: -0.3px;
-      margin-bottom: 2rem;
+      margin-bottom: 1.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .section-title::before {
+      content: '';
+      width: 4px;
+      height: 18px;
+      border-radius: 2px;
+      background: linear-gradient(180deg, var(--accent), rgba(232,192,64,0.3));
     }
     .section-title:not(:first-child) { margin-top: 3.5rem; }
 
@@ -131,19 +206,36 @@
       gap: 1.25rem;
     }
     .card {
+      position: relative;
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 16px;
+      border-radius: 18px;
       padding: 1.75rem;
       display: flex;
       flex-direction: column;
-      transition: border-color 0.2s, background 0.2s, transform 0.2s;
+      transition: all 0.25s ease;
+      overflow: hidden;
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 18px;
+      padding: 1px;
+      background: linear-gradient(135deg, rgba(232,192,64,0.4), transparent 40%, transparent 60%, rgba(139,108,246,0.3));
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
     }
     .card:hover {
-      border-color: var(--border-h);
       background: var(--surface-h);
-      transform: translateY(-2px);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.25);
     }
+    .card:hover::before { opacity: 1; }
 
     .card-header {
       display: flex;
@@ -158,6 +250,7 @@
       overflow: hidden;
       border: 1px solid var(--border);
       background: rgba(255,255,255,0.03);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     }
     .card-icon img {
       width: 100%;
@@ -166,9 +259,9 @@
       display: block;
     }
 
-    .card-title-block { flex: 1; min-width: 0; padding-top: 0.15rem; }
+    .card-title-block { flex: 1; min-width: 0; padding-top: 0.2rem; }
     .card-title {
-      font-size: 1.05rem;
+      font-size: 1.08rem;
       font-weight: 600;
       letter-spacing: -0.2px;
       margin-bottom: 0.2rem;
@@ -180,7 +273,7 @@
     }
 
     .card-desc {
-      font-size: 0.88rem;
+      font-size: 0.9rem;
       color: var(--muted);
       line-height: 1.6;
       margin-bottom: 1.25rem;
@@ -195,16 +288,16 @@
       font-weight: 500;
       color: var(--text);
       text-decoration: none;
-      padding: 0.55rem 1rem;
-      border-radius: 8px;
+      padding: 0.6rem 1.05rem;
+      border-radius: 9px;
       background: rgba(255,255,255,0.05);
       border: 1px solid var(--border);
       align-self: flex-start;
-      transition: background 0.2s, border-color 0.2s;
+      transition: all 0.2s;
     }
     .card-cta:hover {
-      background: rgba(232,192,64,0.1);
-      border-color: rgba(232,192,64,0.3);
+      background: rgba(232,192,64,0.12);
+      border-color: rgba(232,192,64,0.35);
       color: var(--accent);
     }
     .card.disabled { opacity: 0.55; }
@@ -213,20 +306,33 @@
       color: var(--faint);
     }
 
+    /* ── FOOTER ── */
+    .footer {
+      margin-top: 4rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.82rem;
+      color: var(--faint);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 900px) {
       .layout {
         grid-template-columns: 1fr;
         gap: 3rem;
-        padding: 3rem 1.5rem;
+        padding: 3rem 1.5rem 4rem;
       }
-      .sidebar { position: static; }
+      .sidebar { position: static; max-width: 360px; }
       .grid { grid-template-columns: 1fr; }
     }
     @media (max-width: 480px) {
       .layout { padding: 2.5rem 1.25rem; }
-      .avatar { width: 80px; height: 80px; font-size: 1.6rem; }
-      .name { font-size: 1.4rem; }
+      .avatar-wrap { width: 88px; height: 88px; }
+      .name { font-size: 1.5rem; }
     }
   </style>
 </head>
@@ -235,8 +341,10 @@
 
     <!-- ── SIDEBAR ── -->
     <aside class="sidebar">
-      <div class="avatar">
-        <img src="logo.png" alt="Tota Labs logo">
+      <div class="avatar-wrap">
+        <div class="avatar">
+          <img src="logo.png" alt="Tota Labs logo">
+        </div>
       </div>
       <h1 class="name">Tota Labs</h1>
       <p class="role">Indie Developer</p>
@@ -245,21 +353,20 @@
       </p>
 
       <div class="links">
-        <a href="https://www.youtube.com/@TotaLabs" target="_blank" rel="noopener">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2s-.2-1.7-1-2.4c-.9-1-1.9-1-2.4-1.1C17.1 2.5 12 2.5 12 2.5s-5.1 0-8.1.2c-.5.1-1.5.1-2.4 1.1-.7.8-1 2.4-1 2.4S.2 8 .2 9.8v1.7c0 1.8.3 3.6.3 3.6s.2 1.7 1 2.4c.9 1 2.1.9 2.6 1 1.9.2 8 .2 8 .2s5.1 0 8.1-.2c.5-.1 1.5-.1 2.4-1.1.7-.8 1-2.4 1-2.4s.3-1.8.3-3.6V9.8c-.1-1.8-.4-3.6-.4-3.6zM9.7 15.5V8l6.5 3.8-6.5 3.7z"/></svg>
-          YouTube
+        <a class="link-pill" href="https://www.youtube.com/@TotaLabs" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2s-.2-1.7-1-2.4c-.9-1-1.9-1-2.4-1.1C17.1 2.5 12 2.5 12 2.5s-5.1 0-8.1.2c-.5.1-1.5.1-2.4 1.1-.7.8-1 2.4-1 2.4S.2 8 .2 9.8v1.7c0 1.8.3 3.6.3 3.6s.2 1.7 1 2.4c.9 1 2.1.9 2.6 1 1.9.2 8 .2 8 .2s5.1 0 8.1-.2c.5-.1 1.5-.1 2.4-1.1.7-.8 1-2.4 1-2.4s.3-1.8.3-3.6V9.8c-.1-1.8-.4-3.6-.4-3.6zM9.7 15.5V8l6.5 3.8-6.5 3.7z"/></svg>
+          <span class="label">YouTube</span>
+          <span class="arrow">→</span>
         </a>
-        <a href="https://x.com/tota_labs" target="_blank" rel="noopener">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-          @tota_labs
+        <a class="link-pill" href="https://x.com/tota_labs" target="_blank" rel="noopener">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          <span class="label">@tota_labs</span>
+          <span class="arrow">→</span>
         </a>
-        <a href="https://apps.apple.com/developer/zeki-yigit-gulergun/id1866038656" target="_blank" rel="noopener">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M6 2C3.79 2 2 3.79 2 6v12c0 2.21 1.79 4 4 4h12c2.21 0 4-1.79 4-4V6c0-2.21-1.79-4-4-4H6zm6 4.5l4.5 9h-2.1l-1-2.1H10.6l-1 2.1H7.5L12 6.5zm0 4.5l-1 2h2l-1-2z"/></svg>
-          App Store
-        </a>
-        <a href="/blog">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
-          Blog
+        <a class="link-pill" href="https://apps.apple.com/developer/zeki-yigit-gulergun/id1866038656" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M6 2C3.79 2 2 3.79 2 6v12c0 2.21 1.79 4 4 4h12c2.21 0 4-1.79 4-4V6c0-2.21-1.79-4-4-4H6zm6 4.5l4.5 9h-2.1l-1-2.1H10.6l-1 2.1H7.5L12 6.5zm0 4.5l-1 2h2l-1-2z"/></svg>
+          <span class="label">App Store</span>
+          <span class="arrow">→</span>
         </a>
       </div>
 
@@ -278,41 +385,38 @@
       <h2 class="section-title">Apps</h2>
       <div class="grid">
 
-        <!-- CICHO -->
         <article class="card">
           <div class="card-header">
             <div class="card-icon"><img src="cicho.png" alt="Cicho"></div>
             <div class="card-title-block">
               <h3 class="card-title">Cicho</h3>
-              <p class="card-subtitle">Focus & distraction blocker</p>
+              <p class="card-subtitle">Find places to work nearby</p>
             </div>
           </div>
           <p class="card-desc">
-            A minimal iOS app to silence distractions and lock in. Block apps and notifications during focused work sessions, track your streaks, and build deep work habits.
+            For remote workers and digital nomads. Discover spots with reliable wifi, power outlets, and the right noise level — within 5km of where you are. Collect stamps from every place you save.
           </p>
           <a class="card-cta" href="https://apps.apple.com/pl/app/cicho/id6765781671" target="_blank" rel="noopener">
             View on App Store →
           </a>
         </article>
 
-        <!-- OZAIO -->
         <article class="card">
           <div class="card-header">
             <div class="card-icon"><img src="ozaio.png" alt="Ozaio"></div>
             <div class="card-title-block">
               <h3 class="card-title">Ozaio</h3>
-              <p class="card-subtitle">Mindfulness & breathing</p>
+              <p class="card-subtitle">A tiny zen space</p>
             </div>
           </div>
           <p class="card-desc">
-            A calm space for daily breathing exercises and mindfulness practice. Simple animations guide your breath; no subscriptions, no clutter — just presence.
+            Short pauses, a quiet inner garden, and a few daily things to track. Made for moments when you need a soft reset during the day.
           </p>
           <a class="card-cta" href="https://apps.apple.com/pl/app/ozaio/id6757318842" target="_blank" rel="noopener">
             View on App Store →
           </a>
         </article>
 
-        <!-- NEURAL BLITZ — shipping June 2026 -->
         <article class="card disabled">
           <div class="card-header">
             <div class="card-icon"><img src="neural-blitz.png" alt="Neural Blitz"></div>
@@ -322,7 +426,7 @@
             </div>
           </div>
           <p class="card-desc">
-            Currently in development. A new iOS app — more details coming soon.
+            Currently in development. Still cooking — more details coming soon.
           </p>
           <span class="card-cta">In development</span>
         </article>
@@ -342,7 +446,7 @@
             </div>
           </div>
           <p class="card-desc">
-            A clean web dashboard for tracking personal spending, savings goals, and net worth over time. Built for indie makers who want clarity without spreadsheets.
+            A clean web dashboard for tracking personal spending, savings goals, and net worth over time. Built for makers who want clarity without spreadsheets.
           </p>
           <a class="card-cta" href="https://tota-finance.com" target="_blank" rel="noopener">
             Open Dashboard →
@@ -350,6 +454,11 @@
         </article>
 
       </div>
+
+      <footer class="footer">
+        <span>© 2026 Tota Labs</span>
+        <span>Made in Poland 🇵🇱</span>
+      </footer>
 
     </main>
   </div>
