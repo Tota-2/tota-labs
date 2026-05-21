@@ -6,6 +6,24 @@
   <title>Tota Labs — Indie iOS Developer</title>
   <meta name="description" content="Turning random ideas into apps. iOS apps and tools by Tota Labs.">
   <link rel="icon" href="logo.png" type="image/png">
+
+  <!-- Open Graph (Facebook, LinkedIn, WhatsApp, iMessage, Slack) -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://tota-labs.com/">
+  <meta property="og:title" content="Tota Labs — Indie iOS Developer">
+  <meta property="og:description" content="Turning random ideas into apps.">
+  <meta property="og:image" content="https://tota-labs.com/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="Tota Labs">
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@tota_labs">
+  <meta name="twitter:creator" content="@tota_labs">
+  <meta name="twitter:title" content="Tota Labs — Indie iOS Developer">
+  <meta name="twitter:description" content="Turning random ideas into apps.">
+  <meta name="twitter:image" content="https://tota-labs.com/og-image.png">
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -161,6 +179,80 @@
     .link-pill:hover .arrow {
       transform: translateX(3px);
       color: var(--accent);
+    }
+
+    /* ── YOUTUBE CARD ── */
+    .yt-card {
+      margin-top: 1.5rem;
+      display: block;
+      text-decoration: none;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      transition: all 0.2s;
+      color: inherit;
+    }
+    .yt-card:hover {
+      background: var(--surface-h);
+      border-color: var(--border-h);
+      transform: translateY(-2px);
+    }
+    .yt-thumb {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background:
+        radial-gradient(ellipse at center, rgba(232,0,0,0.18) 0%, transparent 65%),
+        linear-gradient(135deg, #1a1f2e 0%, #0f1320 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .yt-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .yt-play {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: rgba(232,0,0,0.95);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 16px rgba(232,0,0,0.4);
+      position: relative;
+      z-index: 1;
+    }
+    .yt-play svg { margin-left: 3px; }
+    .yt-card:hover .yt-play { transform: scale(1.08); }
+    .yt-play { transition: transform 0.2s; }
+    .yt-body { padding: 0.85rem 1rem 0.95rem; }
+    .yt-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--faint);
+      margin-bottom: 0.35rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .yt-label svg { color: #ff0033; }
+    .yt-title {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text);
+      line-height: 1.35;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
 
     /* ── MAIN ── */
@@ -358,6 +450,22 @@
           <span class="arrow">→</span>
         </a>
       </div>
+
+      <!-- LATEST YOUTUBE — auto-fills when first video drops -->
+      <a id="yt-card" class="yt-card" href="https://www.youtube.com/@TotaLabs" target="_blank" rel="noopener">
+        <div class="yt-thumb" id="yt-thumb">
+          <div class="yt-play">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+        </div>
+        <div class="yt-body">
+          <div class="yt-label">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2s-.2-1.7-1-2.4c-.9-1-1.9-1-2.4-1.1C17.1 2.5 12 2.5 12 2.5s-5.1 0-8.1.2c-.5.1-1.5.1-2.4 1.1-.7.8-1 2.4-1 2.4S.2 8 .2 9.8v1.7c0 1.8.3 3.6.3 3.6s.2 1.7 1 2.4c.9 1 2.1.9 2.6 1 1.9.2 8 .2 8 .2s5.1 0 8.1-.2c.5-.1 1.5-.1 2.4-1.1.7-.8 1-2.4 1-2.4s.3-1.8.3-3.6V9.8c-.1-1.8-.4-3.6-.4-3.6zM9.7 15.5V8l6.5 3.8-6.5 3.7z"/></svg>
+            <span id="yt-status">Latest on YouTube</span>
+          </div>
+          <div class="yt-title" id="yt-title">Subscribe — first video coming soon</div>
+        </div>
+      </a>
     </aside>
 
     <!-- ── MAIN ── -->
@@ -443,5 +551,39 @@
 
     </main>
   </div>
+
+  <script>
+    // Fetch latest YouTube video from channel RSS via CORS proxy.
+    // Gracefully degrades to the "coming soon" placeholder if it fails.
+    (async () => {
+      const CHANNEL_ID = 'UC-lUiBuBMmeebK_SCOD2JVA';
+      const feed = `https://www.youtube.com/feeds/videos.xml?channel_id=${CHANNEL_ID}`;
+      const proxy = `https://api.allorigins.win/raw?url=${encodeURIComponent(feed)}`;
+      try {
+        const res = await fetch(proxy);
+        if (!res.ok) return;
+        const xml = await res.text();
+        const doc = new DOMParser().parseFromString(xml, 'text/xml');
+        const entry = doc.querySelector('entry');
+        if (!entry) return;
+        const videoId = entry.querySelector('videoId')?.textContent
+          || entry.querySelector('[id^="yt:videoId"]')?.textContent;
+        const title = entry.querySelector('title')?.textContent;
+        const link = entry.querySelector('link')?.getAttribute('href');
+        if (!videoId || !title) return;
+
+        const card = document.getElementById('yt-card');
+        const thumb = document.getElementById('yt-thumb');
+        const status = document.getElementById('yt-status');
+        const titleEl = document.getElementById('yt-title');
+
+        card.href = link || `https://www.youtube.com/watch?v=${videoId}`;
+        thumb.innerHTML = `<img src="https://i.ytimg.com/vi/${videoId}/hqdefault.jpg" alt="${title}"><div class="yt-play"><svg width="18" height="18" viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg></div>`;
+        thumb.querySelector('.yt-play').style.position = 'absolute';
+        status.textContent = 'Latest video';
+        titleEl.textContent = title;
+      } catch (e) { /* silent fail — keep placeholder */ }
+    })();
+  </script>
 </body>
 </html>
