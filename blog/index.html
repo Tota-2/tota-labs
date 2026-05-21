@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog — Tota Labs</title>
+  <meta name="description" content="Notes on building iOS apps, indie hacking, and shipping in public.">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg:        #0a0e1a;
+      --surface:   rgba(255,255,255,0.03);
+      --surface-h: rgba(255,255,255,0.06);
+      --border:    rgba(255,255,255,0.08);
+      --border-h:  rgba(255,255,255,0.16);
+      --accent:    #E8C040;
+      --text:      #f0f0f0;
+      --muted:     #8a8f9c;
+      --faint:     #555a66;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', system-ui, sans-serif;
+      line-height: 1.6;
+      min-height: 100vh;
+      background-image:
+        radial-gradient(ellipse 60% 30% at 20% 0%, rgba(232,192,64,0.05) 0%, transparent 70%);
+    }
+
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 4rem 1.75rem 6rem;
+    }
+
+    /* ── NAV ── */
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 3.5rem;
+    }
+    .nav-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      color: var(--text);
+    }
+    .nav-brand img {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+    }
+    .nav-brand span { font-weight: 600; }
+    .nav-back {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+    .nav-back:hover { color: var(--text); }
+
+    /* ── HEADER ── */
+    h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      margin-bottom: 0.5rem;
+    }
+    .subtitle {
+      font-size: 1.05rem;
+      color: var(--muted);
+      margin-bottom: 3rem;
+    }
+
+    /* ── POST LIST ── */
+    .post-list {
+      list-style: none;
+    }
+    .post-item {
+      padding: 1.5rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .post-item:first-child { padding-top: 0; }
+    .post-link {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+      transition: opacity 0.2s;
+    }
+    .post-link:hover { opacity: 0.7; }
+    .post-link:hover .post-title { color: var(--accent); }
+    .post-date {
+      font-size: 0.82rem;
+      color: var(--faint);
+      letter-spacing: 0.04em;
+      margin-bottom: 0.4rem;
+    }
+    .post-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      letter-spacing: -0.2px;
+      margin-bottom: 0.4rem;
+      transition: color 0.2s;
+    }
+    .post-excerpt {
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    /* ── EMPTY STATE ── */
+    .empty {
+      padding: 4rem 2rem;
+      text-align: center;
+      background: var(--surface);
+      border: 1px dashed var(--border);
+      border-radius: 16px;
+    }
+    .empty-icon {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      opacity: 0.5;
+    }
+    .empty-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+    .empty-text {
+      font-size: 0.92rem;
+      color: var(--muted);
+      max-width: 320px;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 480px) {
+      .container { padding: 2.5rem 1.25rem; }
+      h1 { font-size: 1.6rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <nav class="nav">
+      <a class="nav-brand" href="/">
+        <img src="/logo.png" alt="Tota Labs">
+        <span>Tota Labs</span>
+      </a>
+      <a class="nav-back" href="/">← Back</a>
+    </nav>
+
+    <header>
+      <h1>Blog</h1>
+      <p class="subtitle">Notes on building apps, shipping ideas, and learning in public.</p>
+    </header>
+
+    <!-- When you write your first post, replace the empty state below with a <ul class="post-list"> like this:
+
+    <ul class="post-list">
+      <li class="post-item">
+        <a class="post-link" href="/blog/how-i-shipped-cicho.html">
+          <div class="post-date">May 2026</div>
+          <h2 class="post-title">How I shipped Cicho in 3 weeks</h2>
+          <p class="post-excerpt">A short story about building a focus app from idea to App Store, with the smallest possible v1.</p>
+        </a>
+      </li>
+    </ul>
+
+    -->
+
+    <div class="empty">
+      <div class="empty-icon">✍️</div>
+      <div class="empty-title">No posts yet</div>
+      <p class="empty-text">First post is coming soon. Stories about shipping apps, lessons learned, and indie maker stuff.</p>
+    </div>
+
+  </div>
+</body>
+</html>
