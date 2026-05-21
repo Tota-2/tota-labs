@@ -3,27 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tota Labs</title>
-  <meta name="description" content="Building iOS apps & tools — by Tota">
+  <title>Tota Labs — iOS Developer</title>
+  <meta name="description" content="iOS developer building apps & tools. Turning interesting ideas into products.">
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --bg:        #080c1a;
-      --surface:   rgba(255,255,255,0.04);
+      --bg:        #0a0e1a;
+      --surface:   rgba(255,255,255,0.03);
+      --surface-h: rgba(255,255,255,0.06);
       --border:    rgba(255,255,255,0.08);
-      --border-h:  rgba(255,255,255,0.15);
+      --border-h:  rgba(255,255,255,0.16);
       --accent:    #E8C040;
-      --accent-dim:#c9a530;
       --text:      #f0f0f0;
-      --muted:     #888;
-      --faint:     #444;
-      --live:      #34d399;
-      --soon:      #E8C040;
-      --radius:    14px;
+      --muted:     #8a8f9c;
+      --faint:     #555a66;
     }
-
-    html { scroll-behavior: smooth; }
 
     body {
       background: var(--bg);
@@ -31,335 +26,323 @@
       font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', system-ui, sans-serif;
       line-height: 1.6;
       min-height: 100vh;
-      /* subtle radial glow at top */
       background-image:
-        radial-gradient(ellipse 80% 40% at 50% -10%, rgba(232,192,64,0.07) 0%, transparent 70%);
+        radial-gradient(ellipse 60% 30% at 20% 0%, rgba(232,192,64,0.05) 0%, transparent 70%);
     }
 
-    .page {
-      max-width: 640px;
+    .layout {
+      max-width: 1200px;
       margin: 0 auto;
-      padding: 5rem 1.5rem 6rem;
+      padding: 4rem 2rem;
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 5rem;
     }
 
-    /* ── HEADER ── */
-    .header {
-      margin-bottom: 3.5rem;
+    /* ── SIDEBAR ── */
+    .sidebar {
+      position: sticky;
+      top: 4rem;
+      align-self: start;
     }
-    .header-top {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      margin-bottom: 1rem;
-    }
-    .logo {
-      width: 44px;
-      height: 44px;
-      border-radius: 12px;
+    .avatar {
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
       background: linear-gradient(135deg, #E8C040 0%, #c9781c 100%);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-weight: 800;
-      font-size: 1.1rem;
+      font-size: 2rem;
+      font-weight: 700;
       color: #000;
-      flex-shrink: 0;
-      letter-spacing: -0.5px;
+      letter-spacing: -1px;
+      margin-bottom: 1.75rem;
+      border: 1px solid var(--border);
     }
-    h1 {
-      font-size: 1.8rem;
+    .name {
+      font-size: 1.6rem;
       font-weight: 700;
       letter-spacing: -0.5px;
+      margin-bottom: 0.25rem;
     }
-    .tagline {
-      font-size: 1rem;
+    .role {
+      font-size: 0.95rem;
       color: var(--muted);
       margin-bottom: 1.5rem;
     }
+    .bio {
+      font-size: 0.92rem;
+      color: var(--muted);
+      line-height: 1.65;
+      margin-bottom: 2rem;
+    }
 
-    /* ── SOCIAL ROW ── */
-    .social-row {
+    /* Social text links */
+    .links {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.5rem;
+      gap: 1.25rem;
+      margin-bottom: 1.25rem;
     }
-    .social-btn {
+    .links a {
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.92rem;
+      font-weight: 500;
+      transition: color 0.2s;
+      position: relative;
+    }
+    .links a:hover { color: var(--accent); }
+
+    .secondary-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+    .secondary-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.85rem;
       display: inline-flex;
       align-items: center;
       gap: 0.4rem;
-      padding: 0.4rem 0.9rem;
-      border-radius: 100px;
-      border: 1px solid var(--border);
-      background: var(--surface);
-      color: var(--muted);
-      text-decoration: none;
-      font-size: 0.82rem;
-      font-weight: 500;
-      transition: border-color 0.2s, color 0.2s, background 0.2s;
+      transition: color 0.2s;
     }
-    .social-btn:hover {
-      border-color: var(--border-h);
-      color: var(--text);
-      background: rgba(255,255,255,0.07);
-    }
-    .social-btn svg { flex-shrink: 0; }
+    .secondary-links a:hover { color: var(--text); }
 
-    /* ── SECTION ── */
-    .section {
-      margin-top: 3rem;
+    /* ── MAIN ── */
+    .main { min-width: 0; }
+    .section-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      margin-bottom: 2rem;
     }
-    .section-label {
-      font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--faint);
-      margin-bottom: 1rem;
-    }
+    .section-title:not(:first-child) { margin-top: 3.5rem; }
 
-    /* ── CARDS ── */
-    .card-grid {
+    /* ── PROJECT GRID ── */
+    .grid {
       display: grid;
-      gap: 0.75rem;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.25rem;
     }
     .card {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      padding: 1rem 1.1rem;
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: var(--radius);
-      text-decoration: none;
-      color: inherit;
-      transition: border-color 0.2s, background 0.2s, transform 0.15s;
-      cursor: pointer;
+      border-radius: 16px;
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      transition: border-color 0.2s, background 0.2s, transform 0.2s;
     }
     .card:hover {
       border-color: var(--border-h);
-      background: rgba(255,255,255,0.07);
-      transform: translateY(-1px);
+      background: var(--surface-h);
+      transform: translateY(-2px);
     }
-    .card.disabled {
-      opacity: 0.5;
-      cursor: default;
-      pointer-events: none;
+
+    .card-header {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
     }
     .card-icon {
-      width: 42px;
-      height: 42px;
-      border-radius: 10px;
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      flex-shrink: 0;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.25rem;
-      flex-shrink: 0;
-      background: rgba(255,255,255,0.06);
+      font-size: 1.75rem;
+      background: linear-gradient(135deg, rgba(232,192,64,0.15), rgba(201,120,28,0.1));
       border: 1px solid var(--border);
     }
-    .card-body { flex: 1; min-width: 0; }
+    .card-icon.icon-cicho { background: linear-gradient(135deg, #4a90e2, #2c5aa0); }
+    .card-icon.icon-ozaio { background: linear-gradient(135deg, #7ed321, #417505); }
+    .card-icon.icon-finance { background: linear-gradient(135deg, #bd10e0, #5d2e8f); }
+    .card-icon.icon-new {
+      background: rgba(255,255,255,0.04);
+      color: var(--faint);
+    }
+
+    .card-title-block { flex: 1; min-width: 0; padding-top: 0.15rem; }
     .card-title {
-      font-size: 0.95rem;
+      font-size: 1.05rem;
       font-weight: 600;
+      letter-spacing: -0.2px;
+      margin-bottom: 0.2rem;
       color: var(--text);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
     }
-    .card-desc {
-      font-size: 0.8rem;
+    .card-subtitle {
+      font-size: 0.85rem;
       color: var(--muted);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
     }
-    .card-right {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 0.25rem;
-      flex-shrink: 0;
+
+    .card-desc {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 1.25rem;
+      flex: 1;
     }
-    .badge {
+
+    .card-cta {
       display: inline-flex;
       align-items: center;
-      gap: 0.3rem;
-      font-size: 0.7rem;
-      font-weight: 600;
-      padding: 0.2rem 0.55rem;
-      border-radius: 100px;
-      letter-spacing: 0.02em;
-    }
-    .badge-live {
-      background: rgba(52,211,153,0.1);
-      color: var(--live);
-      border: 1px solid rgba(52,211,153,0.2);
-    }
-    .badge-live::before {
-      content: '';
-      width: 5px; height: 5px;
-      border-radius: 50%;
-      background: var(--live);
-      animation: pulse 2s ease-in-out infinite;
-    }
-    .badge-soon {
-      background: rgba(232,192,64,0.1);
-      color: var(--soon);
-      border: 1px solid rgba(232,192,64,0.2);
-    }
-    .badge-tool {
-      background: rgba(139,92,246,0.1);
-      color: #a78bfa;
-      border: 1px solid rgba(139,92,246,0.2);
-    }
-    .card-arrow {
-      color: var(--faint);
+      gap: 0.4rem;
       font-size: 0.85rem;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.4; }
-    }
-
-    /* ── FOOTER ── */
-    .footer {
-      margin-top: 4rem;
-      padding-top: 1.5rem;
-      border-top: 1px solid var(--border);
-      font-size: 0.78rem;
-      color: var(--faint);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
-    .footer a {
-      color: var(--faint);
+      font-weight: 500;
+      color: var(--text);
       text-decoration: none;
-      transition: color 0.2s;
+      padding: 0.55rem 1rem;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+      align-self: flex-start;
+      transition: background 0.2s, border-color 0.2s;
     }
-    .footer a:hover { color: var(--muted); }
+    .card-cta:hover {
+      background: rgba(232,192,64,0.1);
+      border-color: rgba(232,192,64,0.3);
+      color: var(--accent);
+    }
+    .card.disabled { opacity: 0.55; }
+    .card.disabled .card-cta {
+      pointer-events: none;
+      color: var(--faint);
+    }
 
     /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+        padding: 3rem 1.5rem;
+      }
+      .sidebar { position: static; }
+      .grid { grid-template-columns: 1fr; }
+    }
     @media (max-width: 480px) {
-      .page { padding: 3.5rem 1.25rem 5rem; }
-      h1 { font-size: 1.5rem; }
-      .card-icon { width: 38px; height: 38px; font-size: 1.1rem; }
+      .layout { padding: 2.5rem 1.25rem; }
+      .avatar { width: 80px; height: 80px; font-size: 1.6rem; }
+      .name { font-size: 1.4rem; }
     }
   </style>
 </head>
 <body>
-  <div class="page">
+  <div class="layout">
 
-    <!-- HEADER -->
-    <header class="header">
-      <div class="header-top">
-        <div class="logo">TL</div>
-        <h1>Tota Labs</h1>
+    <!-- ── SIDEBAR ── -->
+    <aside class="sidebar">
+      <div class="avatar">TL</div>
+      <h1 class="name">Tota Labs</h1>
+      <p class="role">iOS Developer · Indie Maker</p>
+      <p class="bio">
+        Focused on iOS app development, turning interesting ideas into products.
+        Building in public, one ship at a time.
+      </p>
+
+      <div class="links">
+        <a href="https://youtube.com/@totaLabs" target="_blank" rel="noopener">YouTube</a>
+        <a href="https://x.com/tota_labs" target="_blank" rel="noopener">Twitter</a>
+        <!-- Add when ready:
+        <a href="https://medium.com/@yourhandle" target="_blank" rel="noopener">Medium</a>
+        <a href="https://substack.com/@yourhandle" target="_blank" rel="noopener">Substack</a>
+        -->
+        <a href="https://apps.apple.com/developer/tota-2/id000000000" target="_blank" rel="noopener">App Store</a>
       </div>
-      <p class="tagline">Building iOS apps & tools — one ship at a time.</p>
 
-      <!-- SOCIAL LINKS -->
-      <div class="social-row">
-        <a class="social-btn" href="https://youtube.com/@totaLabs" target="_blank" rel="noopener">
-          <!-- YouTube icon -->
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M23.5 6.2s-.2-1.7-1-2.4c-.9-1-1.9-1-2.4-1.1C17.1 2.5 12 2.5 12 2.5s-5.1 0-8.1.2c-.5.1-1.5.1-2.4 1.1-.7.8-1 2.4-1 2.4S.2 8 .2 9.8v1.7c0 1.8.3 3.6.3 3.6s.2 1.7 1 2.4c.9 1 2.1.9 2.6 1 1.9.2 8 .2 8 .2s5.1 0 8.1-.2c.5-.1 1.5-.1 2.4-1.1.7-.8 1-2.4 1-2.4s.3-1.8.3-3.6V9.8c-.1-1.8-.4-3.6-.4-3.6zM9.7 15.5V8l6.5 3.8-6.5 3.7z"/>
-          </svg>
-          YouTube
-        </a>
-        <a class="social-btn" href="https://x.com/tota_labs" target="_blank" rel="noopener">
-          <!-- X icon -->
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-          </svg>
-          X
-        </a>
-        <!-- Uncomment & fill when ready:
-        <a class="social-btn" href="https://medium.com/@yourhandle" target="_blank" rel="noopener">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 01-6.77 6.82A6.8 6.8 0 010 12a6.8 6.8 0 016.77-6.82A6.8 6.8 0 0113.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42-1.87 0-3.39-2.88-3.39-6.42s1.52-6.42 3.39-6.42 3.38 2.88 3.38 6.42M24 12c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75C23.47 6.25 24 8.83 24 12z"/></svg>
-          Medium
-        </a>
-        <a class="social-btn" href="mailto:your@email.com">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      <div class="secondary-links">
+        <!-- Update email when ready -->
+        <a href="mailto:hello@tota-labs.com">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
           Email
+        </a>
+        <!-- Uncomment when RSS is set up:
+        <a href="/rss.xml">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M6.18 15.64a2.18 2.18 0 012.18 2.18C8.36 19 7.38 20 6.18 20A2.18 2.18 0 014 17.82a2.18 2.18 0 012.18-2.18M4 4.44A15.56 15.56 0 0119.56 20h-2.83A12.73 12.73 0 004 7.27V4.44m0 5.66a9.9 9.9 0 019.9 9.9h-2.83A7.07 7.07 0 004 12.93V10.1z"/></svg>
+          RSS
         </a>
         -->
       </div>
-    </header>
+    </aside>
 
-    <!-- APPS -->
-    <section class="section">
-      <p class="section-label">Apps</p>
-      <div class="card-grid">
+    <!-- ── MAIN ── -->
+    <main class="main">
 
-        <a class="card" href="https://apps.apple.com/pl/app/cicho/id6765781671" target="_blank" rel="noopener">
-          <div class="card-icon">🤫</div>
-          <div class="card-body">
-            <div class="card-title">Cicho</div>
-            <div class="card-desc">iOS app — focus & distraction blocker</div>
-          </div>
-          <div class="card-right">
-            <span class="badge badge-live">Live</span>
-            <span class="card-arrow">↗</span>
-          </div>
-        </a>
+      <h2 class="section-title">Projects</h2>
+      <div class="grid">
 
-        <a class="card" href="https://apps.apple.com/pl/app/ozaio/id6757318842" target="_blank" rel="noopener">
-          <div class="card-icon">🧘</div>
-          <div class="card-body">
-            <div class="card-title">Ozaio</div>
-            <div class="card-desc">iOS app — mindfulness & breathing</div>
+        <!-- CICHO -->
+        <article class="card">
+          <div class="card-header">
+            <div class="card-icon icon-cicho">🤫</div>
+            <div class="card-title-block">
+              <h3 class="card-title">Cicho</h3>
+              <p class="card-subtitle">Focus & distraction blocker</p>
+            </div>
           </div>
-          <div class="card-right">
-            <span class="badge badge-live">Live</span>
-            <span class="card-arrow">↗</span>
-          </div>
-        </a>
+          <p class="card-desc">
+            A minimal iOS app to silence distractions and lock in. Block apps and notifications during focused work sessions, track your streaks, and build deep work habits.
+          </p>
+          <a class="card-cta" href="https://apps.apple.com/pl/app/cicho/id6765781671" target="_blank" rel="noopener">
+            View on App Store →
+          </a>
+        </article>
 
-        <!-- 3rd app — update name/link when ready -->
-        <div class="card disabled">
-          <div class="card-icon">⚙️</div>
-          <div class="card-body">
-            <div class="card-title">New App</div>
-            <div class="card-desc">iOS app — in development</div>
+        <!-- OZAIO -->
+        <article class="card">
+          <div class="card-header">
+            <div class="card-icon icon-ozaio">🧘</div>
+            <div class="card-title-block">
+              <h3 class="card-title">Ozaio</h3>
+              <p class="card-subtitle">Mindfulness & breathing</p>
+            </div>
           </div>
-          <div class="card-right">
-            <span class="badge badge-soon">June 2026</span>
+          <p class="card-desc">
+            A calm space for daily breathing exercises and mindfulness practice. Simple animations guide your breath; no subscriptions, no clutter — just presence.
+          </p>
+          <a class="card-cta" href="https://apps.apple.com/pl/app/ozaio/id6757318842" target="_blank" rel="noopener">
+            View on App Store →
+          </a>
+        </article>
+
+        <!-- FINANCE DASHBOARD -->
+        <article class="card">
+          <div class="card-header">
+            <div class="card-icon icon-finance">📊</div>
+            <div class="card-title-block">
+              <h3 class="card-title">Finance Dashboard</h3>
+              <p class="card-subtitle">Personal tracking tool</p>
+            </div>
           </div>
-        </div>
+          <p class="card-desc">
+            A clean web dashboard for tracking personal spending, savings goals, and net worth over time. Built for indie makers who want clarity without spreadsheets.
+          </p>
+          <a class="card-cta" href="https://tota-finance.com" target="_blank" rel="noopener">
+            Open Dashboard →
+          </a>
+        </article>
+
+        <!-- 3rd APP — update when ready -->
+        <article class="card disabled">
+          <div class="card-header">
+            <div class="card-icon icon-new">⚙️</div>
+            <div class="card-title-block">
+              <h3 class="card-title">New App</h3>
+              <p class="card-subtitle">Coming June 2026</p>
+            </div>
+          </div>
+          <p class="card-desc">
+            Currently in development. A new iOS app focused on solving a small but real daily problem — more details coming soon.
+          </p>
+          <span class="card-cta">In development</span>
+        </article>
 
       </div>
-    </section>
 
-    <!-- TOOLS -->
-    <section class="section">
-      <p class="section-label">Tools</p>
-      <div class="card-grid">
-
-        <a class="card" href="https://tota-finance.com" target="_blank" rel="noopener">
-          <div class="card-icon">📊</div>
-          <div class="card-body">
-            <div class="card-title">Finance Dashboard</div>
-            <div class="card-desc">Personal tracking & analytics tool</div>
-          </div>
-          <div class="card-right">
-            <span class="badge badge-tool">Web</span>
-            <span class="card-arrow">↗</span>
-          </div>
-        </a>
-
-      </div>
-    </section>
-
-    <!-- FOOTER -->
-    <footer class="footer">
-      <span>© 2026 Tota Labs</span>
-      <span>Building in public</span>
-    </footer>
-
+    </main>
   </div>
 </body>
 </html>
