@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /og-template.html
+Disallow: /originals/
+
+Sitemap: https://tota-labs.com/sitemap.xml
