@@ -486,7 +486,7 @@
         </a>
         <a class="link-pill" href="mailto:totabuilds@gmail.com">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg>
-          <span class="label">totabuilds@gmail.com</span>
+          <span class="label">Email</span>
           <span class="arrow">→</span>
         </a>
       </div>
@@ -583,6 +583,21 @@
           </a>
         </article>
 
+        <!-- FLO — in development -->
+        <article class="card disabled">
+          <div class="card-header">
+            <div class="card-icon"><img src="tota-finance.png" alt="Flo" width="56" height="56" loading="lazy" decoding="async"></div>
+            <div class="card-title-block">
+              <h3 class="card-title">Flo</h3>
+              <p class="card-subtitle">flo.tota-finance.com</p>
+            </div>
+          </div>
+          <p class="card-desc">
+            A companion tool to Tota Finance. Currently in development — not publicly accessible yet.
+          </p>
+          <span class="card-cta">In development</span>
+        </article>
+
       </div>
 
       <footer class="footer">
@@ -618,10 +633,18 @@
 
         const title = entry.querySelector('title')?.textContent || '';
         const link = entry.querySelector('link')?.getAttribute('href') || '';
+        const publishedAt = new Date(entry.querySelector('published')?.textContent || 0);
 
         // Whitelist video ID (must be exactly 11 chars, alphanum + - + _)
         if (!videoId || !/^[A-Za-z0-9_-]{11}$/.test(videoId)) return;
         if (!title) return;
+
+        // Skip YouTube's auto-titled empty live streams ("X Canlı Yayını", "X Live Stream")
+        // and anything published before this channel's real-content era.
+        const MIN_DATE = new Date('2026-05-01');
+        const isAutoLiveTitle = /(canlı\s*yayın[ıi]?|live\s*stream)$/i.test(title.trim());
+        if (isAutoLiveTitle) return;
+        if (publishedAt < MIN_DATE) return;
 
         // Only accept https YouTube links
         const safeLink = /^https:\/\/(www\.)?youtube\.com\//.test(link)
