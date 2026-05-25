@@ -3,4 +3,4 @@ Allow: /
 Disallow: /og-template.html
 Disallow: /originals/
 
-Sitemap: https://tota-labs.com/sitemap.xml
+Sitemap: https://www.tota-labs.com/sitemap.xml
