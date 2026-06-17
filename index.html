@@ -508,7 +508,7 @@
         </a>
       </div>
 
-      <!-- LATEST YOUTUBE — auto-fills when first video drops -->
+      <!-- LATEST YOUTUBE — auto-fills from the channel feed when available -->
       <a id="yt-card" class="yt-card" href="https://www.youtube.com/@TotaLabs" target="_blank" rel="noopener">
         <div class="yt-thumb" id="yt-thumb">
           <div class="yt-play">
@@ -518,9 +518,9 @@
         <div class="yt-body">
           <div class="yt-label">
             <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2s-.2-1.7-1-2.4c-.9-1-1.9-1-2.4-1.1C17.1 2.5 12 2.5 12 2.5s-5.1 0-8.1.2c-.5.1-1.5.1-2.4 1.1-.7.8-1 2.4-1 2.4S.2 8 .2 9.8v1.7c0 1.8.3 3.6.3 3.6s.2 1.7 1 2.4c.9 1 2.1.9 2.6 1 1.9.2 8 .2 8 .2s5.1 0 8.1-.2c.5-.1 1.5-.1 2.4-1.1.7-.8 1-2.4 1-2.4s.3-1.8.3-3.6V9.8c-.1-1.8-.4-3.6-.4-3.6zM9.7 15.5V8l6.5 3.8-6.5 3.7z"/></svg>
-            <span id="yt-status">Latest on YouTube</span>
+            <span id="yt-status">YouTube</span>
           </div>
-          <div class="yt-title" id="yt-title">Subscribe — first video coming soon</div>
+          <div class="yt-title" id="yt-title">Watch the latest videos on YouTube</div>
         </div>
       </a>
     </aside>
@@ -642,11 +642,55 @@
 
   <script>
     // Fetch latest YouTube video from channel RSS via CORS proxy.
-    // Gracefully degrades to the "coming soon" placeholder if it fails.
+    // Falls back to a known published video if the proxy is temporarily down.
     (async () => {
       const CHANNEL_ID = 'UC-lUiBuBMmeebK_SCOD2JVA';
       const feed = `https://www.youtube.com/feeds/videos.xml?channel_id=${CHANNEL_ID}`;
       const proxy = `https://api.allorigins.win/raw?url=${encodeURIComponent(feed)}`;
+
+      const fallbackVideo = {
+        videoId: 'WcKwnx-AaKo',
+        title: 'The Quiet Trap of Being Busy | Future Lesson #002',
+        link: 'https://www.youtube.com/watch?v=WcKwnx-AaKo',
+        status: 'Latest video'
+      };
+
+      const renderVideo = ({ videoId, title, link, status }) => {
+        const card    = document.getElementById('yt-card');
+        const thumb   = document.getElementById('yt-thumb');
+        const statusEl = document.getElementById('yt-status');
+        const titleEl = document.getElementById('yt-title');
+        if (!card || !thumb || !statusEl || !titleEl) return;
+
+        thumb.textContent = '';
+        const img = document.createElement('img');
+        img.src = `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
+        img.alt = title;
+        img.loading = 'lazy';
+
+        const playWrap = document.createElement('div');
+        playWrap.className = 'yt-play';
+        playWrap.style.position = 'absolute';
+        const playIcon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        playIcon.setAttribute('width', '18');
+        playIcon.setAttribute('height', '18');
+        playIcon.setAttribute('viewBox', '0 0 24 24');
+        playIcon.setAttribute('fill', '#fff');
+        const playPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        playPath.setAttribute('d', 'M8 5v14l11-7z');
+        playIcon.appendChild(playPath);
+        playWrap.appendChild(playIcon);
+
+        thumb.appendChild(img);
+        thumb.appendChild(playWrap);
+
+        card.href = link;
+        statusEl.textContent = status;
+        titleEl.textContent = title;
+      };
+
+      renderVideo(fallbackVideo);
+
       try {
         const res = await fetch(proxy);
         if (!res.ok) return;
@@ -684,31 +728,8 @@
           ? link
           : `https://www.youtube.com/watch?v=${videoId}`;
 
-        const card    = document.getElementById('yt-card');
-        const thumb   = document.getElementById('yt-thumb');
-        const status  = document.getElementById('yt-status');
-        const titleEl = document.getElementById('yt-title');
-        if (!card || !thumb || !status || !titleEl) return;
-
-        // Build DOM nodes (not innerHTML) so untrusted content cannot inject markup.
-        thumb.textContent = '';
-        const img = document.createElement('img');
-        img.src = `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
-        img.alt = title;          // .alt is a property assignment, safely encoded by the browser
-        img.loading = 'lazy';
-
-        const playWrap = document.createElement('div');
-        playWrap.className = 'yt-play';
-        playWrap.style.position = 'absolute';
-        playWrap.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg>';
-
-        thumb.appendChild(img);
-        thumb.appendChild(playWrap);
-
-        card.href = safeLink;
-        status.textContent  = 'Latest video';
-        titleEl.textContent = title;
-      } catch (e) { /* silent fail — keep placeholder */ }
+        renderVideo({ videoId, title, link: safeLink, status: 'Latest video' });
+      } catch (e) { /* silent fail — keep fallback video */ }
     })();
   </script>
 </body>
