@@ -38,6 +38,15 @@
       ]
     },
     {
+      "source": "/latest-update.json",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, no-store, must-revalidate"
+        }
+      ]
+    },
+    {
       "source": "/og-template.html",
       "headers": [
         {

@@ -965,13 +965,13 @@
       </section>
 
       <section class="signals" aria-label="Latest Tota Labs signals">
-        <a class="signal-card" href="https://x.com/tota_labs" target="_blank" rel="noopener">
-          <span class="signal-label"><span class="signal-dot"></span>Latest on X</span>
-          <h3 class="signal-title">Build notes, launches, and small experiments.</h3>
-          <p class="signal-copy">
+        <a class="signal-card" id="latest-x-card" href="https://x.com/tota_labs" target="_blank" rel="noopener">
+          <span class="signal-label"><span class="signal-dot"></span><span id="latest-x-label">Latest on X</span></span>
+          <h3 class="signal-title" id="latest-x-title">Build notes, launches, and small experiments.</h3>
+          <p class="signal-copy" id="latest-x-copy">
             Short updates from the lab: what shipped, what broke, what changed, and what is being tested next.
           </p>
-          <span class="signal-link">Open @tota_labs →</span>
+          <span class="signal-link" id="latest-x-cta">Open @tota_labs →</span>
         </a>
 
         <a class="signal-card" href="https://www.youtube.com/@TotaLabs" target="_blank" rel="noopener">
@@ -1123,6 +1123,33 @@
           setView(button.dataset.view);
         });
       });
+    })();
+
+    (async () => {
+      try {
+        const res = await fetch('/latest-update.json', { cache: 'no-cache' });
+        if (!res.ok) return;
+        const update = await res.json();
+
+        const card = document.getElementById('latest-x-card');
+        const label = document.getElementById('latest-x-label');
+        const title = document.getElementById('latest-x-title');
+        const copy = document.getElementById('latest-x-copy');
+        const cta = document.getElementById('latest-x-cta');
+        if (!card || !label || !title || !copy || !cta) return;
+
+        const safeUrl = typeof update.url === 'string' &&
+          /^https:\/\/(x|twitter)\.com\/[A-Za-z0-9_]+(\/status\/[0-9]+)?\/?([?#][^\s<>"']*)?$/.test(update.url)
+            ? update.url
+            : null;
+        if (!safeUrl) return;
+
+        card.href = safeUrl;
+        if (typeof update.label === 'string' && update.label.trim()) label.textContent = update.label.trim();
+        if (typeof update.title === 'string' && update.title.trim()) title.textContent = update.title.trim();
+        if (typeof update.text === 'string' && update.text.trim()) copy.textContent = update.text.trim();
+        if (typeof update.cta === 'string' && update.cta.trim()) cta.textContent = update.cta.trim();
+      } catch (e) { /* keep static latest update fallback */ }
     })();
 
     // Fetch latest YouTube video from channel RSS via CORS proxy.
