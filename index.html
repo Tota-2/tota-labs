@@ -322,111 +322,250 @@
     }
     .section-title:not(:first-child) { margin-top: 3.5rem; }
 
-    /* ── PROJECT GRID ── */
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1.25rem;
-    }
-    .card {
+    /* ── PRODUCT WALL ── */
+    .studio {
       position: relative;
-      background: var(--surface);
+      min-height: 680px;
       border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 1.75rem;
+      border-radius: 22px;
+      overflow: hidden;
+      background:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px),
+        radial-gradient(ellipse 55% 45% at 64% 45%, rgba(232,192,64,0.1), transparent 68%),
+        radial-gradient(ellipse 45% 35% at 32% 78%, rgba(139,108,246,0.09), transparent 70%),
+        rgba(255,255,255,0.018);
+      background-size: 32px 32px, 32px 32px, auto, auto, auto;
+    }
+    .studio-topbar {
+      position: absolute;
+      top: 1.25rem;
+      left: 1.25rem;
+      right: 1.25rem;
+      z-index: 4;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .studio-kicker {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--faint);
+    }
+    .view-toggle {
+      display: inline-flex;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      background: rgba(10,14,26,0.58);
+      backdrop-filter: blur(14px);
+    }
+    .view-toggle button {
+      border: 0;
+      min-width: 76px;
+      padding: 0.65rem 0.9rem;
+      color: var(--muted);
+      background: transparent;
+      font: inherit;
+      font-size: 0.82rem;
+      font-weight: 650;
+      cursor: pointer;
+    }
+    .view-toggle button + button { border-left: 1px solid var(--border); }
+    .view-toggle button.active {
+      color: #0a0e1a;
+      background: var(--accent);
+    }
+    .product-rail {
+      position: absolute;
+      top: 5.5rem;
+      left: 1.25rem;
+      bottom: 1.25rem;
+      z-index: 3;
+      width: 265px;
       display: flex;
       flex-direction: column;
-      transition: all 0.25s ease;
-      overflow: hidden;
+      gap: 0.6rem;
+      overflow: auto;
+      padding-right: 0.35rem;
     }
-    .card::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border-radius: 18px;
-      padding: 1px;
-      background: linear-gradient(135deg, rgba(232,192,64,0.4), transparent 40%, transparent 60%, rgba(139,108,246,0.3));
-      -webkit-mask: linear-gradient(#000, #000) content-box, linear-gradient(#000, #000);
-      -webkit-mask-composite: xor;
-      mask-composite: exclude;
-      opacity: 0;
-      transition: opacity 0.3s;
-      pointer-events: none;
+    .product-rail {
+      scrollbar-width: none;
     }
-    .card:hover {
-      background: var(--surface-h);
-      transform: translateY(-3px);
-      box-shadow: 0 12px 32px rgba(0,0,0,0.25);
+    .product-rail::-webkit-scrollbar {
+      display: none;
     }
-    .card:hover::before { opacity: 1; }
-
-    .card-header {
-      display: flex;
-      gap: 1rem;
-      margin-bottom: 1rem;
-    }
-    .card-icon {
-      width: 56px;
-      height: 56px;
+    .product-tab {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 44px 1fr auto;
+      gap: 0.8rem;
+      align-items: center;
+      padding: 0.75rem;
+      border: 1px solid transparent;
       border-radius: 14px;
-      flex-shrink: 0;
-      overflow: hidden;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,0.03);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      color: var(--text);
+      text-align: left;
+      background: rgba(10,14,26,0.38);
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s, transform 0.2s;
+      font: inherit;
     }
-    .card-icon img {
+    .product-tab:hover,
+    .product-tab.active {
+      border-color: var(--border-h);
+      background: rgba(255,255,255,0.07);
+      transform: translateX(2px);
+    }
+    .product-tab img,
+    .floating-app img,
+    .detail-icon img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: block;
     }
-
-    .card-title-block { flex: 1; min-width: 0; padding-top: 0.2rem; }
-    .card-title {
-      font-size: 1.08rem;
-      font-weight: 600;
-      letter-spacing: -0.2px;
-      margin-bottom: 0.2rem;
-      color: var(--text);
+    .product-tab img {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      box-shadow: 0 8px 22px rgba(0,0,0,0.28);
     }
-    .card-subtitle {
-      font-size: 0.85rem;
-      color: var(--muted);
+    .product-tab strong {
+      display: block;
+      font-size: 0.92rem;
+      line-height: 1.2;
+      margin-bottom: 0.18rem;
     }
-
-    .card-desc {
-      font-size: 0.9rem;
+    .product-tab span {
+      display: block;
       color: var(--muted);
+      font-size: 0.76rem;
+      line-height: 1.25;
+    }
+    .tab-arrow {
+      color: var(--faint);
+      font-size: 1.2rem;
+    }
+    .product-canvas {
+      position: absolute;
+      inset: 0;
+      padding-left: 300px;
+    }
+    .floating-app {
+      position: absolute;
+      width: 78px;
+      height: 78px;
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 22px;
+      overflow: hidden;
+      box-shadow: 0 24px 70px rgba(0,0,0,0.42);
+      opacity: 0.72;
+      transform: translate(-50%, -50%) rotate(var(--r));
+      transition: transform 0.35s ease, opacity 0.25s, filter 0.25s;
+      background: #111827;
+    }
+    .floating-app.active {
+      opacity: 1;
+      filter: saturate(1.15);
+      transform: translate(-50%, -50%) rotate(0deg) scale(1.38);
+      z-index: 2;
+    }
+    .floating-app:nth-child(1) { left: 45%; top: 33%; --r: -9deg; }
+    .floating-app:nth-child(2) { left: 64%; top: 27%; --r: 8deg; }
+    .floating-app:nth-child(3) { left: 78%; top: 49%; --r: 12deg; }
+    .floating-app:nth-child(4) { left: 56%; top: 66%; --r: -7deg; }
+    .floating-app:nth-child(5) { left: 38%; top: 58%; --r: 9deg; }
+    .floating-app:nth-child(6) { left: 72%; top: 72%; --r: -5deg; }
+    .focus-panel {
+      position: absolute;
+      right: 2rem;
+      bottom: 2rem;
+      width: min(390px, calc(100% - 340px));
+      z-index: 3;
+      border: 1px solid var(--border-h);
+      border-radius: 22px;
+      padding: 1.35rem;
+      background: rgba(10,14,26,0.74);
+      backdrop-filter: blur(18px);
+      box-shadow: 0 24px 90px rgba(0,0,0,0.35);
+    }
+    .detail-head {
+      display: flex;
+      align-items: center;
+      gap: 0.95rem;
+      margin-bottom: 1rem;
+    }
+    .detail-icon {
+      width: 58px;
+      height: 58px;
+      border-radius: 16px;
+      overflow: hidden;
+      flex-shrink: 0;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+    }
+    .detail-title {
+      font-size: 1.35rem;
+      line-height: 1.15;
+      letter-spacing: -0.35px;
+      margin-bottom: 0.25rem;
+    }
+    .detail-tagline {
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+    .detail-desc {
+      color: var(--muted);
+      font-size: 0.93rem;
       line-height: 1.6;
-      margin-bottom: 1.25rem;
-      flex: 1;
+      margin-bottom: 1.1rem;
     }
-
-    .card-cta {
+    .detail-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    .meta-pill {
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 0.35rem 0.6rem;
+      color: var(--muted);
+      background: rgba(255,255,255,0.04);
+      font-size: 0.76rem;
+      font-weight: 600;
+    }
+    .detail-action {
       display: inline-flex;
       align-items: center;
-      gap: 0.4rem;
-      font-size: 0.85rem;
-      font-weight: 500;
-      color: var(--text);
+      gap: 0.45rem;
+      color: #0a0e1a;
+      background: var(--accent);
+      border-radius: 10px;
+      padding: 0.72rem 0.95rem;
+      font-size: 0.86rem;
+      font-weight: 700;
       text-decoration: none;
-      padding: 0.6rem 1.05rem;
-      border-radius: 9px;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid var(--border);
-      align-self: flex-start;
-      transition: all 0.2s;
     }
-    .card-cta:hover {
-      background: rgba(232,192,64,0.12);
-      border-color: rgba(232,192,64,0.35);
-      color: var(--accent);
-    }
-    .card.disabled { opacity: 0.55; }
-    .card.disabled .card-cta {
+    .detail-action.disabled {
       pointer-events: none;
       color: var(--faint);
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--border);
+    }
+    .studio.wall .focus-panel {
+      transform: translateY(8px);
+      opacity: 0;
+      pointer-events: none;
+    }
+    .studio.wall .floating-app {
+      width: 92px;
+      height: 92px;
+      opacity: 0.92;
+      transform: translate(-50%, -50%) rotate(var(--r));
     }
 
     /* ── FOOTER ── */
@@ -450,12 +589,72 @@
         padding: 3rem 1.5rem 4rem;
       }
       .sidebar { position: static; max-width: 360px; }
-      .grid { grid-template-columns: 1fr; }
+      .studio {
+        min-height: auto;
+        padding: 5.25rem 1rem 1rem;
+      }
+      .studio-topbar {
+        left: 1rem;
+        right: 1rem;
+      }
+      .product-rail {
+        position: relative;
+        top: auto;
+        left: auto;
+        bottom: auto;
+        width: 100%;
+        flex-direction: row;
+        overflow-x: auto;
+        padding: 0 0 0.35rem;
+        margin-bottom: 1rem;
+      }
+      .product-tab {
+        min-width: 230px;
+        flex-shrink: 0;
+      }
+      .product-canvas {
+        position: relative;
+        inset: auto;
+        height: 315px;
+        padding-left: 0;
+      }
+      .focus-panel {
+        position: relative;
+        right: auto;
+        bottom: auto;
+        width: 100%;
+      }
+      .studio.wall .focus-panel {
+        display: none;
+      }
     }
-    @media (max-width: 480px) {
+    @media (max-width: 640px) {
       .layout { padding: 2.5rem 1.25rem; }
       .avatar-wrap { width: 88px; height: 88px; }
       .name { font-size: 1.5rem; }
+      .studio-topbar {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+      .view-toggle {
+        width: 100%;
+      }
+      .view-toggle button {
+        min-width: 0;
+        flex: 1;
+      }
+      .product-canvas {
+        height: 275px;
+      }
+      .floating-app {
+        width: 64px;
+        height: 64px;
+        border-radius: 18px;
+      }
+      .studio.wall .floating-app {
+        width: 72px;
+        height: 72px;
+      }
     }
   </style>
 </head>
@@ -528,110 +727,77 @@
     <!-- ── MAIN ── -->
     <main class="main">
 
-      <!-- APPS -->
-      <h2 class="section-title">Apps</h2>
-      <div class="grid">
+      <h2 class="section-title">Products</h2>
+      <section class="studio" id="product-studio" aria-label="Tota Labs product wall">
+        <div class="studio-topbar">
+          <span class="studio-kicker">6 projects · apps, games, tools</span>
+          <div class="view-toggle" aria-label="Change product view">
+            <button class="active" type="button" data-view="focus">Focus</button>
+            <button type="button" data-view="wall">Wall</button>
+          </div>
+        </div>
 
-        <article class="card">
-          <div class="card-header">
-            <div class="card-icon"><img src="cicho.png" alt="Cicho" width="56" height="56" loading="lazy" decoding="async"></div>
-            <div class="card-title-block">
-              <h3 class="card-title">Cicho</h3>
-              <p class="card-subtitle">Find places to work nearby</p>
+        <div class="product-rail" aria-label="Products">
+          <button class="product-tab active" type="button" data-product="cicho">
+            <img src="cicho.png" alt="" width="44" height="44" loading="lazy" decoding="async">
+            <span><strong>Cicho</strong><span>Work-friendly spots nearby</span></span>
+            <span class="tab-arrow">›</span>
+          </button>
+          <button class="product-tab" type="button" data-product="ozaio">
+            <img src="ozaio.png" alt="" width="44" height="44" loading="lazy" decoding="async">
+            <span><strong>Ozaio</strong><span>A tiny zen space</span></span>
+            <span class="tab-arrow">›</span>
+          </button>
+          <button class="product-tab" type="button" data-product="neural">
+            <img src="neural-blitz.png" alt="" width="44" height="44" loading="lazy" decoding="async">
+            <span><strong>Neural Blitz</strong><span>Fast daily brain challenges</span></span>
+            <span class="tab-arrow">›</span>
+          </button>
+          <button class="product-tab" type="button" data-product="simitci">
+            <img src="simitci-rush.png" alt="" width="44" height="44" loading="lazy" decoding="async">
+            <span><strong>Simitci Rush</strong><span>Istanbul street-vendor game</span></span>
+            <span class="tab-arrow">›</span>
+          </button>
+          <button class="product-tab" type="button" data-product="finance">
+            <img src="tota-finance.png" alt="" width="44" height="44" loading="lazy" decoding="async">
+            <span><strong>Tota Finance</strong><span>Personal tracking dashboard</span></span>
+            <span class="tab-arrow">›</span>
+          </button>
+          <button class="product-tab" type="button" data-product="flo">
+            <img src="tota-finance.png" alt="" width="44" height="44" loading="lazy" decoding="async">
+            <span><strong>Flo</strong><span>Finance companion tool</span></span>
+            <span class="tab-arrow">›</span>
+          </button>
+        </div>
+
+        <div class="product-canvas" aria-hidden="true">
+          <div class="floating-app active" data-product="cicho"><img src="cicho.png" alt="" width="78" height="78" loading="lazy" decoding="async"></div>
+          <div class="floating-app" data-product="ozaio"><img src="ozaio.png" alt="" width="78" height="78" loading="lazy" decoding="async"></div>
+          <div class="floating-app" data-product="neural"><img src="neural-blitz.png" alt="" width="78" height="78" loading="lazy" decoding="async"></div>
+          <div class="floating-app" data-product="simitci"><img src="simitci-rush.png" alt="" width="78" height="78" loading="lazy" decoding="async"></div>
+          <div class="floating-app" data-product="finance"><img src="tota-finance.png" alt="" width="78" height="78" loading="lazy" decoding="async"></div>
+          <div class="floating-app" data-product="flo"><img src="tota-finance.png" alt="" width="78" height="78" loading="lazy" decoding="async"></div>
+        </div>
+
+        <article class="focus-panel" aria-live="polite">
+          <div class="detail-head">
+            <div class="detail-icon"><img id="detail-icon" src="cicho.png" alt="" width="58" height="58" decoding="async"></div>
+            <div>
+              <h3 class="detail-title" id="detail-title">Cicho</h3>
+              <p class="detail-tagline" id="detail-tagline">Find places to work nearby</p>
             </div>
           </div>
-          <p class="card-desc">
-            For remote workers and digital nomads. Discover spots with reliable wifi, power outlets, and the right noise level — within 5km of where you are. Collect stamps from every place you save.
+          <p class="detail-desc" id="detail-desc">
+            For remote workers and digital nomads. Discover spots with reliable wifi, power outlets, and the right noise level within 5km of where you are.
           </p>
-          <a class="card-cta" href="https://apps.apple.com/pl/app/cicho/id6765781671" target="_blank" rel="noopener">
-            View on App Store →
-          </a>
-        </article>
-
-        <article class="card">
-          <div class="card-header">
-            <div class="card-icon"><img src="ozaio.png" alt="Ozaio" width="56" height="56" loading="lazy" decoding="async"></div>
-            <div class="card-title-block">
-              <h3 class="card-title">Ozaio</h3>
-              <p class="card-subtitle">A tiny zen space</p>
-            </div>
+          <div class="detail-meta" id="detail-meta">
+            <span class="meta-pill">iOS</span>
+            <span class="meta-pill">Live</span>
+            <span class="meta-pill">App Store</span>
           </div>
-          <p class="card-desc">
-            Short pauses, a quiet inner garden, and a few daily things to track. Made for moments when you need a soft reset during the day.
-          </p>
-          <a class="card-cta" href="https://apps.apple.com/pl/app/ozaio/id6757318842" target="_blank" rel="noopener">
-            View on App Store →
-          </a>
+          <a class="detail-action" id="detail-action" href="https://apps.apple.com/pl/app/cicho/id6765781671" target="_blank" rel="noopener">View on App Store →</a>
         </article>
-
-        <article class="card">
-          <div class="card-header">
-            <div class="card-icon"><img src="neural-blitz.png" alt="Neural Blitz" width="56" height="56" loading="lazy" decoding="async"></div>
-            <div class="card-title-block">
-              <h3 class="card-title">Neural Blitz</h3>
-              <p class="card-subtitle">Fast daily brain challenges</p>
-            </div>
-          </div>
-          <p class="card-desc">
-            Quick logic, focus, math, word, grammar, recall, and decision games. Build your Neural Score, keep your streak alive, and climb the leaderboard.
-          </p>
-          <a class="card-cta" href="https://apps.apple.com/pl/app/neural-blitz/id6772118304" target="_blank" rel="noopener">
-            View on App Store →
-          </a>
-        </article>
-
-        <article class="card disabled">
-          <div class="card-header">
-            <div class="card-icon"><img src="simitci-rush.png" alt="Simitci Rush" width="56" height="56" loading="lazy" decoding="async"></div>
-            <div class="card-title-block">
-              <h3 class="card-title">Simitci Rush</h3>
-              <p class="card-subtitle">Coming soon</p>
-            </div>
-          </div>
-          <p class="card-desc">
-            A mobile Istanbul street-vendor game about serving customers, managing stock, setting prices, upgrading your cart, and unlocking new districts.
-          </p>
-          <span class="card-cta">Coming soon</span>
-        </article>
-
-      </div>
-
-      <!-- WEBSITES -->
-      <h2 class="section-title">Websites</h2>
-      <div class="grid">
-
-        <article class="card">
-          <div class="card-header">
-            <div class="card-icon"><img src="tota-finance.png" alt="Tota Finance" width="56" height="56" loading="lazy" decoding="async"></div>
-            <div class="card-title-block">
-              <h3 class="card-title">Tota Finance</h3>
-              <p class="card-subtitle">Personal tracking dashboard</p>
-            </div>
-          </div>
-          <p class="card-desc">
-            A clean web dashboard for tracking personal spending, savings goals, and net worth over time. Built for makers who want clarity without spreadsheets.
-          </p>
-          <a class="card-cta" href="https://tota-finance.com" target="_blank" rel="noopener">
-            Open Dashboard →
-          </a>
-        </article>
-
-        <!-- FLO — in development -->
-        <article class="card disabled">
-          <div class="card-header">
-            <div class="card-icon"><img src="tota-finance.png" alt="Flo" width="56" height="56" loading="lazy" decoding="async"></div>
-            <div class="card-title-block">
-              <h3 class="card-title">Flo</h3>
-              <p class="card-subtitle">flo.tota-finance.com</p>
-            </div>
-          </div>
-          <p class="card-desc">
-            A companion tool to Tota Finance. Currently in development — not publicly accessible yet.
-          </p>
-          <span class="card-cta">In development</span>
-        </article>
-
-      </div>
+      </section>
 
       <footer class="footer">
         <span>© 2026 Tota Labs</span>
@@ -641,6 +807,121 @@
   </div>
 
   <script>
+    (() => {
+      const products = {
+        cicho: {
+          title: 'Cicho',
+          tagline: 'Find places to work nearby',
+          icon: 'cicho.png',
+          desc: 'For remote workers and digital nomads. Discover spots with reliable wifi, power outlets, and the right noise level within 5km of where you are.',
+          meta: ['iOS', 'Live', 'App Store'],
+          action: 'View on App Store →',
+          href: 'https://apps.apple.com/pl/app/cicho/id6765781671'
+        },
+        ozaio: {
+          title: 'Ozaio',
+          tagline: 'A tiny zen space',
+          icon: 'ozaio.png',
+          desc: 'Short pauses, a quiet inner garden, and a few daily things to track. Made for moments when you need a soft reset during the day.',
+          meta: ['iOS', 'Live', 'App Store'],
+          action: 'View on App Store →',
+          href: 'https://apps.apple.com/pl/app/ozaio/id6757318842'
+        },
+        neural: {
+          title: 'Neural Blitz',
+          tagline: 'Fast daily brain challenges',
+          icon: 'neural-blitz.png',
+          desc: 'Quick logic, focus, math, word, grammar, recall, and decision games. Build your Neural Score, keep your streak alive, and climb the leaderboard.',
+          meta: ['iOS', 'Live', 'Game'],
+          action: 'View on App Store →',
+          href: 'https://apps.apple.com/pl/app/neural-blitz/id6772118304'
+        },
+        simitci: {
+          title: 'Simitci Rush',
+          tagline: 'Istanbul street-vendor game',
+          icon: 'simitci-rush.png',
+          desc: 'A mobile Istanbul street-vendor game about serving customers, managing stock, setting prices, upgrading your cart, and unlocking new districts.',
+          meta: ['iOS', 'Game', 'Coming soon'],
+          action: 'Coming soon',
+          href: ''
+        },
+        finance: {
+          title: 'Tota Finance',
+          tagline: 'Personal tracking dashboard',
+          icon: 'tota-finance.png',
+          desc: 'A clean web dashboard for tracking personal spending, savings goals, and net worth over time. Built for makers who want clarity without spreadsheets.',
+          meta: ['Web', 'Live', 'Dashboard'],
+          action: 'Open Dashboard →',
+          href: 'https://tota-finance.com'
+        },
+        flo: {
+          title: 'Flo',
+          tagline: 'Finance companion tool',
+          icon: 'tota-finance.png',
+          desc: 'A companion tool to Tota Finance. Currently in development and not publicly accessible yet.',
+          meta: ['Web', 'In development', 'Private'],
+          action: 'In development',
+          href: ''
+        }
+      };
+
+      const studio = document.getElementById('product-studio');
+      const tabs = [...document.querySelectorAll('.product-tab')];
+      const floatingApps = [...document.querySelectorAll('.floating-app')];
+      const detailIcon = document.getElementById('detail-icon');
+      const detailTitle = document.getElementById('detail-title');
+      const detailTagline = document.getElementById('detail-tagline');
+      const detailDesc = document.getElementById('detail-desc');
+      const detailMeta = document.getElementById('detail-meta');
+      const detailAction = document.getElementById('detail-action');
+
+      const selectProduct = (id) => {
+        const product = products[id];
+        if (!product || !detailIcon || !detailTitle || !detailTagline || !detailDesc || !detailMeta || !detailAction) return;
+
+        tabs.forEach((tab) => tab.classList.toggle('active', tab.dataset.product === id));
+        floatingApps.forEach((app) => app.classList.toggle('active', app.dataset.product === id));
+
+        detailIcon.src = product.icon;
+        detailIcon.alt = '';
+        detailTitle.textContent = product.title;
+        detailTagline.textContent = product.tagline;
+        detailDesc.textContent = product.desc;
+
+        detailMeta.textContent = '';
+        product.meta.forEach((item) => {
+          const pill = document.createElement('span');
+          pill.className = 'meta-pill';
+          pill.textContent = item;
+          detailMeta.appendChild(pill);
+        });
+
+        detailAction.textContent = product.action;
+        detailAction.classList.toggle('disabled', !product.href);
+        if (product.href) {
+          detailAction.href = product.href;
+          detailAction.setAttribute('target', '_blank');
+          detailAction.setAttribute('rel', 'noopener');
+        } else {
+          detailAction.removeAttribute('href');
+          detailAction.removeAttribute('target');
+          detailAction.removeAttribute('rel');
+        }
+      };
+
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', () => selectProduct(tab.dataset.product));
+      });
+
+      document.querySelectorAll('[data-view]').forEach((button) => {
+        button.addEventListener('click', () => {
+          const view = button.dataset.view;
+          document.querySelectorAll('[data-view]').forEach((item) => item.classList.toggle('active', item === button));
+          studio?.classList.toggle('wall', view === 'wall');
+        });
+      });
+    })();
+
     // Fetch latest YouTube video from channel RSS via CORS proxy.
     // Falls back to a known published video if the proxy is temporarily down.
     (async () => {
