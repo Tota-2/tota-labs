@@ -528,6 +528,8 @@
       left: 345px;
       right: 500px;
       bottom: 1.5rem;
+      transition: transform 0.28s ease-out;
+      will-change: transform;
     }
     .floating-app {
       position: absolute;
@@ -713,6 +715,70 @@
     .studio.wall .floating-app:nth-child(5) { left: 30%; top: 72%; }
     .studio.wall .floating-app:nth-child(6) { left: 81%; top: 76%; }
 
+    /* ── RECENTLY SHIPPED ── */
+    .shipped-strip {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 0.85rem;
+      min-height: 58px;
+      margin-top: 1rem;
+      padding: 0.7rem 0.15rem;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      color: var(--text);
+      text-decoration: none;
+    }
+    .shipped-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.28);
+    }
+    .shipped-copy {
+      min-width: 0;
+    }
+    .shipped-label {
+      display: flex;
+      align-items: center;
+      gap: 0.42rem;
+      margin-bottom: 0.15rem;
+      color: var(--faint);
+      font-size: 0.65rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .shipped-label::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #42d392;
+      box-shadow: 0 0 12px rgba(66,211,146,0.55);
+    }
+    .shipped-title {
+      overflow: hidden;
+      color: var(--muted);
+      font-size: 0.85rem;
+      line-height: 1.35;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .shipped-title strong {
+      color: var(--text);
+      font-weight: 700;
+    }
+    .shipped-arrow {
+      color: var(--faint);
+      font-size: 1.1rem;
+      transition: color 0.2s, transform 0.2s;
+    }
+    .shipped-strip:hover .shipped-arrow {
+      color: var(--accent);
+      transform: translateX(3px);
+    }
+
     /* ── SIGNALS ── */
     .signals {
       display: grid;
@@ -880,6 +946,9 @@
       .signals {
         grid-template-columns: 1fr;
       }
+      .product-canvas {
+        transform: none !important;
+      }
     }
     @media (max-width: 640px) {
       .layout {
@@ -1001,6 +1070,13 @@
       }
       .signals {
         margin-top: 0.9rem;
+      }
+      .shipped-strip {
+        gap: 0.68rem;
+        margin-top: 0.8rem;
+      }
+      .shipped-title {
+        font-size: 0.78rem;
       }
       .signal-card {
         min-height: 0;
@@ -1154,6 +1230,15 @@
         </article>
       </section>
 
+      <a class="shipped-strip" href="https://apps.apple.com/pl/app/neural-blitz/id6772118304" target="_blank" rel="noopener" aria-label="View Neural Blitz on the App Store">
+        <img class="shipped-icon" src="neural-blitz.png" alt="" width="36" height="36" loading="lazy" decoding="async">
+        <span class="shipped-copy">
+          <span class="shipped-label">Recently shipped</span>
+          <span class="shipped-title"><strong>Neural Blitz</strong> is live on the App Store</span>
+        </span>
+        <span class="shipped-arrow" aria-hidden="true">→</span>
+      </a>
+
       <section class="signals" aria-label="Latest Tota Labs signals">
         <a class="signal-card" id="latest-x-card" href="https://x.com/tota_labs" target="_blank" rel="noopener">
           <span class="signal-label"><span class="signal-dot"></span><span id="latest-x-label">Latest on X</span></span>
@@ -1241,6 +1326,7 @@
       };
 
       const studio = document.getElementById('product-studio');
+      const productCanvas = studio?.querySelector('.product-canvas');
       const tabs = [...document.querySelectorAll('.product-tab')];
       const floatingApps = [...document.querySelectorAll('.floating-app')];
       const detailIcon = document.getElementById('detail-icon');
@@ -1325,6 +1411,18 @@
           setView(button.dataset.view);
         });
       });
+
+      if (studio && productCanvas && matchMedia('(hover: hover) and (pointer: fine)').matches) {
+        studio.addEventListener('pointermove', (event) => {
+          const bounds = studio.getBoundingClientRect();
+          const x = ((event.clientX - bounds.left) / bounds.width - 0.5) * 8;
+          const y = ((event.clientY - bounds.top) / bounds.height - 0.5) * 6;
+          productCanvas.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+        });
+        studio.addEventListener('pointerleave', () => {
+          productCanvas.style.transform = '';
+        });
+      }
     })();
 
     (async () => {
