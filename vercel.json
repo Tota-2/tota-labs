@@ -1,4 +1,10 @@
 {
+  "rewrites": [
+    {
+      "source": "/youtube-feed.xml",
+      "destination": "https://www.youtube.com/feeds/videos.xml?channel_id=UC-lUiBuBMmeebK_SCOD2JVA"
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",
