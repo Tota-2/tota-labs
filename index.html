@@ -564,6 +564,7 @@
     .floating-app:nth-child(4) { left: 48%; top: 78%; --r: -6deg; }
     .floating-app:nth-child(5) { left: 24%; top: 62%; --r: 8deg; }
     .floating-app:nth-child(6) { left: 82%; top: 79%; --r: -5deg; }
+    .floating-app:nth-child(7) { left: 20%; top: 88%; --r: -8deg; }
     .focus-panel {
       position: absolute;
       top: 12.75rem;
@@ -714,6 +715,7 @@
     .studio.wall .floating-app:nth-child(4) { left: 55%; top: 66%; }
     .studio.wall .floating-app:nth-child(5) { left: 30%; top: 72%; }
     .studio.wall .floating-app:nth-child(6) { left: 81%; top: 76%; }
+    .studio.wall .floating-app:nth-child(7) { left: 12%; top: 50%; }
 
     /* ── RECENTLY SHIPPED ── */
     .shipped-strip {
@@ -1042,6 +1044,7 @@
       .studio.wall .floating-app:nth-child(4) { left: 56%; top: 70%; }
       .studio.wall .floating-app:nth-child(5) { left: 24%; top: 72%; }
       .studio.wall .floating-app:nth-child(6) { left: 81%; top: 74%; }
+      .studio.wall .floating-app:nth-child(7) { left: 10%; top: 51%; }
       .focus-panel {
         border-radius: 18px;
         padding: 1rem;
@@ -1158,7 +1161,7 @@
       <h2 class="section-title">Products</h2>
       <section class="studio" id="product-studio" aria-label="Tota Labs product wall">
         <div class="studio-topbar">
-          <span class="studio-kicker">6 projects · apps, games, tools</span>
+          <span class="studio-kicker">7 projects · apps, games, tools</span>
           <div class="view-toggle" aria-label="Change product view">
             <button class="active" type="button" data-view="focus">Focus</button>
             <button type="button" data-view="wall">Wall</button>
@@ -1196,6 +1199,11 @@
             <span><strong>Flo</strong><span>Finance companion tool</span></span>
             <span class="tab-arrow">›</span>
           </button>
+          <button class="product-tab" type="button" data-product="fornow">
+            <img src="fornow.png" alt="" width="44" height="44" loading="lazy" decoding="async">
+            <span><strong>ForNow</strong><span>A digital pocket for your Mac</span></span>
+            <span class="tab-arrow">›</span>
+          </button>
         </div>
 
         <div class="product-canvas" aria-label="Product icons">
@@ -1205,6 +1213,7 @@
           <div class="floating-app" data-product="simitci" role="button" tabindex="0" aria-label="Open Simitci Rush details"><img src="simitci-rush.png" alt="" width="78" height="78" loading="lazy" decoding="async"></div>
           <div class="floating-app" data-product="finance" role="button" tabindex="0" aria-label="Open Tota Finance details"><img src="tota-finance.png" alt="" width="78" height="78" loading="lazy" decoding="async"></div>
           <div class="floating-app" data-product="flo" role="button" tabindex="0" aria-label="Open Flo details"><img src="tota-finance.png" alt="" width="78" height="78" loading="lazy" decoding="async"></div>
+          <div class="floating-app" data-product="fornow" role="button" tabindex="0" aria-label="Open ForNow details"><img src="fornow.png" alt="" width="78" height="78" loading="lazy" decoding="async"></div>
         </div>
 
         <article class="focus-panel" aria-live="polite">
@@ -1320,6 +1329,15 @@
           icon: 'tota-finance.png',
           desc: 'A companion tool to Tota Finance. Currently in development and not publicly accessible yet.',
           meta: ['Web', 'In development', 'Private'],
+          action: 'In development',
+          href: ''
+        },
+        fornow: {
+          title: 'ForNow',
+          tagline: 'A digital pocket for your Mac',
+          icon: 'fornow.png',
+          desc: 'A lightweight place to keep files, links, notes, and anything else you only need for now. Close at hand when you need it, out of the way when you do not.',
+          meta: ['macOS', 'Utility', 'In development'],
           action: 'In development',
           href: ''
         }
