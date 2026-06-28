@@ -1,3 +1,7 @@
 Logo/
 .DS_Store
 originals/
+DerivedData/
+*.xcuserstate
+*.xcscmblueprint
+xcuserdata/
