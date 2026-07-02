@@ -412,6 +412,34 @@
       overflow: auto;
       padding-right: 0.35rem;
     }
+    .product-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.46rem;
+    }
+    .product-group + .product-group {
+      margin-top: 0.22rem;
+    }
+    .product-category {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.1rem 0.25rem 0.02rem;
+      color: var(--faint);
+      font-size: 0.62rem;
+      font-weight: 850;
+      letter-spacing: 0.16em;
+      line-height: 1;
+      text-transform: uppercase;
+    }
+    .product-category::before {
+      content: '';
+      width: 5px;
+      height: 5px;
+      border-radius: 999px;
+      background: rgba(232,192,64,0.78);
+      box-shadow: 0 0 14px rgba(232,192,64,0.24);
+    }
     .product-rail {
       scrollbar-width: none;
     }
@@ -914,16 +942,22 @@
         left: auto;
         bottom: auto;
         width: 100%;
-        flex-direction: row;
-        overflow-x: auto;
-        padding: 0.15rem 0.1rem 0.55rem;
+        flex-direction: column;
+        overflow: visible;
+        padding: 0.15rem 0.1rem 0.35rem;
         margin-bottom: 1rem;
-        scroll-snap-type: x proximity;
+      }
+      .product-group {
+        gap: 0.44rem;
+      }
+      .product-group + .product-group {
+        margin-top: 0.25rem;
+      }
+      .product-category {
+        padding-left: 0.1rem;
       }
       .product-tab {
-        min-width: 218px;
-        flex-shrink: 0;
-        scroll-snap-align: start;
+        min-width: 0;
       }
       .product-canvas {
         position: relative;
@@ -1166,7 +1200,7 @@
       <h2 class="section-title">Products</h2>
       <section class="studio" id="product-studio" aria-label="Tota Labs product wall">
         <div class="studio-topbar">
-          <span class="studio-kicker">8 projects · apps, games, tools</span>
+          <span class="studio-kicker">8 projects · grouped by type</span>
           <div class="view-toggle" aria-label="Change product view">
             <button class="active" type="button" data-view="focus">Focus</button>
             <button type="button" data-view="wall">Wall</button>
@@ -1174,46 +1208,61 @@
         </div>
 
         <div class="product-rail" aria-label="Products">
-          <button class="product-tab active" type="button" data-product="cicho">
-            <img src="cicho.png" alt="" width="44" height="44" loading="lazy" decoding="async">
-            <span><strong>Cicho</strong><span>Work-friendly spots nearby</span></span>
-            <span class="tab-arrow">›</span>
-          </button>
-          <button class="product-tab" type="button" data-product="ozaio">
-            <img src="ozaio.png" alt="" width="44" height="44" loading="lazy" decoding="async">
-            <span><strong>Ozaio</strong><span>A tiny zen space</span></span>
-            <span class="tab-arrow">›</span>
-          </button>
-          <button class="product-tab" type="button" data-product="neural">
-            <img src="neural-blitz.png" alt="" width="44" height="44" loading="lazy" decoding="async">
-            <span><strong>Neural Blitz</strong><span>Fast daily brain challenges</span></span>
-            <span class="tab-arrow">›</span>
-          </button>
-          <button class="product-tab" type="button" data-product="simitci">
-            <img src="simitci-rush.png" alt="" width="44" height="44" loading="lazy" decoding="async">
-            <span><strong>Simitçi Simülasyonu</strong><span>Istanbul street shop simulator</span></span>
-            <span class="tab-arrow">›</span>
-          </button>
-          <button class="product-tab" type="button" data-product="finance">
-            <img src="tota-finance.png" alt="" width="44" height="44" loading="lazy" decoding="async">
-            <span><strong>Tota Finance</strong><span>Personal tracking dashboard</span></span>
-            <span class="tab-arrow">›</span>
-          </button>
-          <button class="product-tab" type="button" data-product="flo">
-            <img src="tota-finance.png" alt="" width="44" height="44" loading="lazy" decoding="async">
-            <span><strong>Flo</strong><span>Finance companion tool</span></span>
-            <span class="tab-arrow">›</span>
-          </button>
-          <button class="product-tab" type="button" data-product="fornow">
-            <img src="fornow.png" alt="" width="44" height="44" loading="lazy" decoding="async">
-            <span><strong>ForNow</strong><span>A digital pocket for your Mac</span></span>
-            <span class="tab-arrow">›</span>
-          </button>
-          <button class="product-tab" type="button" data-product="perihelix">
-            <img src="perihelix.svg" alt="" width="44" height="44" loading="lazy" decoding="async">
-            <span><strong>Perihelix</strong><span>One-finger orbital arcade</span></span>
-            <span class="tab-arrow">›</span>
-          </button>
+          <div class="product-group" aria-label="Apps">
+            <div class="product-category">Apps</div>
+            <button class="product-tab active" type="button" data-product="cicho">
+              <img src="cicho.png" alt="" width="44" height="44" loading="lazy" decoding="async">
+              <span><strong>Cicho</strong><span>Work-friendly spots nearby</span></span>
+              <span class="tab-arrow">›</span>
+            </button>
+            <button class="product-tab" type="button" data-product="ozaio">
+              <img src="ozaio.png" alt="" width="44" height="44" loading="lazy" decoding="async">
+              <span><strong>Ozaio</strong><span>A tiny zen space</span></span>
+              <span class="tab-arrow">›</span>
+            </button>
+          </div>
+
+          <div class="product-group" aria-label="Games">
+            <div class="product-category">Games</div>
+            <button class="product-tab" type="button" data-product="neural">
+              <img src="neural-blitz.png" alt="" width="44" height="44" loading="lazy" decoding="async">
+              <span><strong>Neural Blitz</strong><span>Fast daily brain challenges</span></span>
+              <span class="tab-arrow">›</span>
+            </button>
+            <button class="product-tab" type="button" data-product="simitci">
+              <img src="simitci-rush.png" alt="" width="44" height="44" loading="lazy" decoding="async">
+              <span><strong>Simitçi Simülasyonu</strong><span>Istanbul street shop simulator</span></span>
+              <span class="tab-arrow">›</span>
+            </button>
+            <button class="product-tab" type="button" data-product="perihelix">
+              <img src="perihelix.svg" alt="" width="44" height="44" loading="lazy" decoding="async">
+              <span><strong>Perihelix</strong><span>One-finger orbital arcade</span></span>
+              <span class="tab-arrow">›</span>
+            </button>
+          </div>
+
+          <div class="product-group" aria-label="Tools">
+            <div class="product-category">Tools</div>
+            <button class="product-tab" type="button" data-product="fornow">
+              <img src="fornow.png" alt="" width="44" height="44" loading="lazy" decoding="async">
+              <span><strong>ForNow</strong><span>A digital pocket for your Mac</span></span>
+              <span class="tab-arrow">›</span>
+            </button>
+            <button class="product-tab" type="button" data-product="flo">
+              <img src="tota-finance.png" alt="" width="44" height="44" loading="lazy" decoding="async">
+              <span><strong>Flo</strong><span>Finance companion tool</span></span>
+              <span class="tab-arrow">›</span>
+            </button>
+          </div>
+
+          <div class="product-group" aria-label="Websites">
+            <div class="product-category">Websites</div>
+            <button class="product-tab" type="button" data-product="finance">
+              <img src="tota-finance.png" alt="" width="44" height="44" loading="lazy" decoding="async">
+              <span><strong>Tota Finance</strong><span>Personal tracking dashboard</span></span>
+              <span class="tab-arrow">›</span>
+            </button>
+          </div>
         </div>
 
         <div class="product-canvas" aria-label="Product icons">
