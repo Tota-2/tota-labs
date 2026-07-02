@@ -52,7 +52,9 @@
     "owns": [
       { "@type": "MobileApplication", "name": "Cicho", "operatingSystem": "iOS", "url": "https://apps.apple.com/pl/app/cicho/id6765781671" },
       { "@type": "MobileApplication", "name": "Ozaio", "operatingSystem": "iOS", "url": "https://apps.apple.com/pl/app/ozaio/id6757318842" },
-      { "@type": "MobileApplication", "name": "Neural Blitz", "operatingSystem": "iOS", "url": "https://apps.apple.com/pl/app/neural-blitz/id6772118304" }
+      { "@type": "MobileApplication", "name": "Neural Blitz", "operatingSystem": "iOS", "url": "https://apps.apple.com/pl/app/neural-blitz/id6772118304" },
+      { "@type": "MobileApplication", "name": "Simitçi Simülasyonu", "operatingSystem": "iOS", "url": "https://apps.apple.com/developer/zeki-yigit-gulergun/id1866038656" },
+      { "@type": "MobileApplication", "name": "Perihelix", "operatingSystem": "iOS", "applicationCategory": "GameApplication" }
     ]
   }
   </script>
@@ -565,6 +567,7 @@
     .floating-app:nth-child(5) { left: 24%; top: 62%; --r: 8deg; }
     .floating-app:nth-child(6) { left: 82%; top: 79%; --r: -5deg; }
     .floating-app:nth-child(7) { left: 20%; top: 88%; --r: -8deg; }
+    .floating-app:nth-child(8) { left: 67%; top: 86%; --r: 7deg; }
     .focus-panel {
       position: absolute;
       top: 12.75rem;
@@ -716,6 +719,7 @@
     .studio.wall .floating-app:nth-child(5) { left: 30%; top: 72%; }
     .studio.wall .floating-app:nth-child(6) { left: 81%; top: 76%; }
     .studio.wall .floating-app:nth-child(7) { left: 12%; top: 50%; }
+    .studio.wall .floating-app:nth-child(8) { left: 66%; top: 85%; }
 
     /* ── RECENTLY SHIPPED ── */
     .shipped-strip {
@@ -1045,6 +1049,7 @@
       .studio.wall .floating-app:nth-child(5) { left: 24%; top: 72%; }
       .studio.wall .floating-app:nth-child(6) { left: 81%; top: 74%; }
       .studio.wall .floating-app:nth-child(7) { left: 10%; top: 51%; }
+      .studio.wall .floating-app:nth-child(8) { left: 64%; top: 86%; }
       .focus-panel {
         border-radius: 18px;
         padding: 1rem;
@@ -1161,7 +1166,7 @@
       <h2 class="section-title">Products</h2>
       <section class="studio" id="product-studio" aria-label="Tota Labs product wall">
         <div class="studio-topbar">
-          <span class="studio-kicker">7 projects · apps, games, tools</span>
+          <span class="studio-kicker">8 projects · apps, games, tools</span>
           <div class="view-toggle" aria-label="Change product view">
             <button class="active" type="button" data-view="focus">Focus</button>
             <button type="button" data-view="wall">Wall</button>
@@ -1186,7 +1191,7 @@
           </button>
           <button class="product-tab" type="button" data-product="simitci">
             <img src="simitci-rush.png" alt="" width="44" height="44" loading="lazy" decoding="async">
-            <span><strong>Simitci Rush</strong><span>Istanbul shop sim, now live</span></span>
+            <span><strong>Simitçi Simülasyonu</strong><span>Istanbul street shop simulator</span></span>
             <span class="tab-arrow">›</span>
           </button>
           <button class="product-tab" type="button" data-product="finance">
@@ -1204,16 +1209,22 @@
             <span><strong>ForNow</strong><span>A digital pocket for your Mac</span></span>
             <span class="tab-arrow">›</span>
           </button>
+          <button class="product-tab" type="button" data-product="perihelix">
+            <img src="perihelix.svg" alt="" width="44" height="44" loading="lazy" decoding="async">
+            <span><strong>Perihelix</strong><span>One-finger orbital arcade</span></span>
+            <span class="tab-arrow">›</span>
+          </button>
         </div>
 
         <div class="product-canvas" aria-label="Product icons">
           <div class="floating-app active" data-product="cicho" role="button" tabindex="0" aria-label="Open Cicho details"><img src="cicho.png" alt="" width="78" height="78" loading="lazy" decoding="async"></div>
           <div class="floating-app" data-product="ozaio" role="button" tabindex="0" aria-label="Open Ozaio details"><img src="ozaio.png" alt="" width="78" height="78" loading="lazy" decoding="async"></div>
           <div class="floating-app" data-product="neural" role="button" tabindex="0" aria-label="Open Neural Blitz details"><img src="neural-blitz.png" alt="" width="78" height="78" loading="lazy" decoding="async"></div>
-          <div class="floating-app" data-product="simitci" role="button" tabindex="0" aria-label="Open Simitci Rush details"><img src="simitci-rush.png" alt="" width="78" height="78" loading="lazy" decoding="async"></div>
+          <div class="floating-app" data-product="simitci" role="button" tabindex="0" aria-label="Open Simitçi Simülasyonu details"><img src="simitci-rush.png" alt="" width="78" height="78" loading="lazy" decoding="async"></div>
           <div class="floating-app" data-product="finance" role="button" tabindex="0" aria-label="Open Tota Finance details"><img src="tota-finance.png" alt="" width="78" height="78" loading="lazy" decoding="async"></div>
           <div class="floating-app" data-product="flo" role="button" tabindex="0" aria-label="Open Flo details"><img src="tota-finance.png" alt="" width="78" height="78" loading="lazy" decoding="async"></div>
           <div class="floating-app" data-product="fornow" role="button" tabindex="0" aria-label="Open ForNow details"><img src="fornow.png" alt="" width="78" height="78" loading="lazy" decoding="async"></div>
+          <div class="floating-app" data-product="perihelix" role="button" tabindex="0" aria-label="Open Perihelix details"><img src="perihelix.svg" alt="" width="78" height="78" loading="lazy" decoding="async"></div>
         </div>
 
         <article class="focus-panel" aria-live="polite">
@@ -1239,11 +1250,11 @@
         </article>
       </section>
 
-      <a class="shipped-strip" href="https://apps.apple.com/developer/zeki-yigit-gulergun/id1866038656" target="_blank" rel="noopener" aria-label="View Simitci Rush on the App Store">
+      <a class="shipped-strip" href="https://apps.apple.com/developer/zeki-yigit-gulergun/id1866038656" target="_blank" rel="noopener" aria-label="View Simitçi Simülasyonu on the App Store">
         <img class="shipped-icon" src="simitci-rush.png" alt="" width="36" height="36" loading="lazy" decoding="async">
         <span class="shipped-copy">
           <span class="shipped-label">Recently shipped</span>
-          <span class="shipped-title"><strong>Simitci Rush</strong> is live on the App Store</span>
+          <span class="shipped-title"><strong>Simitçi Simülasyonu</strong> is live on the App Store</span>
         </span>
         <span class="shipped-arrow" aria-hidden="true">→</span>
       </a>
@@ -1260,9 +1271,9 @@
 
         <a class="signal-card" href="https://apps.apple.com/developer/zeki-yigit-gulergun/id1866038656" target="_blank" rel="noopener">
           <span class="signal-label"><span class="signal-dot"></span>New release</span>
-          <h3 class="signal-title">Simitci Rush is now live.</h3>
+          <h3 class="signal-title">Simitçi Simülasyonu is now live.</h3>
           <p class="signal-copy">
-            Run a tiny Istanbul simit stand with stock, upgrades, pricing, and daily pressure.
+            A small Istanbul shop simulator about stock, pricing, upgrades, and surviving the daily rush.
           </p>
           <span class="signal-link">Open on App Store →</span>
         </a>
@@ -1306,10 +1317,10 @@
           href: 'https://apps.apple.com/pl/app/neural-blitz/id6772118304'
         },
         simitci: {
-          title: 'Simitci Rush',
-          tagline: 'Run a tiny Istanbul simit stand',
+          title: 'Simitçi Simülasyonu',
+          tagline: 'Istanbul street shop simulator',
           icon: 'simitci-rush.png',
-          desc: 'A mobile Istanbul street-vendor sim about serving customers, managing stock, setting prices, upgrading your stand, and surviving the daily rush.',
+          desc: 'A mobile Istanbul shop simulator about serving customers, managing stock, setting prices, upgrading your stand, and surviving the daily rush.',
           meta: ['iOS', 'Live', 'Game'],
           action: 'Open on App Store →',
           href: 'https://apps.apple.com/developer/zeki-yigit-gulergun/id1866038656'
@@ -1338,6 +1349,15 @@
           icon: 'fornow.png',
           desc: 'A lightweight place to keep files, links, notes, and anything else you only need for now. Close at hand when you need it, out of the way when you do not.',
           meta: ['macOS', 'Utility', 'In development'],
+          action: 'In development',
+          href: ''
+        },
+        perihelix: {
+          title: 'Perihelix',
+          tagline: 'One-finger orbital arcade',
+          icon: 'perihelix.svg',
+          desc: 'A minimalist arcade game in development. Hold to pull inward, release to drift outward, dodge orbital hazards, and chase cleaner runs.',
+          meta: ['iOS', 'Game', 'In development'],
           action: 'In development',
           href: ''
         }
