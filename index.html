@@ -1127,6 +1127,80 @@
         border-radius: 16px;
       }
     }
+    /* Keep the product list, previews and details in separate layout tracks. */
+    .studio {
+      display: grid;
+      grid-template-columns: minmax(200px, 260px) minmax(0, 1fr);
+      gap: 1.5rem;
+      padding: 1.5rem;
+      min-height: 0;
+      align-items: start;
+    }
+    .studio-topbar { position: static; grid-column: 1 / -1; }
+    .product-rail {
+      position: static;
+      width: auto;
+      grid-column: 1;
+      grid-row: 2 / 4;
+      overflow: visible;
+      padding-right: 0;
+    }
+    .product-canvas, .studio.wall .product-canvas {
+      position: static;
+      grid-column: 2;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1.25rem;
+      padding: 1rem;
+      height: auto;
+      min-width: 0;
+      transform: none !important;
+      will-change: auto;
+    }
+    .product-canvas .floating-app,
+    .studio.wall .product-canvas .floating-app {
+      position: relative;
+      inset: auto;
+      width: min(100%, 86px);
+      height: auto;
+      aspect-ratio: 1;
+      justify-self: center;
+      transform: rotate(var(--r));
+    }
+    .product-canvas .floating-app:hover,
+    .product-canvas .floating-app:focus-visible,
+    .product-canvas .floating-app.active {
+      transform: rotate(0deg) scale(1.06);
+      outline: 2px solid var(--accent);
+      outline-offset: 4px;
+    }
+    .focus-panel {
+      position: static;
+      grid-column: 2;
+      width: 100%;
+      min-width: 0;
+    }
+    .studio.wall .focus-panel { display: none; }
+    @media (min-width: 901px) and (max-width: 1250px) {
+      .layout { grid-template-columns: 240px minmax(0, 1fr); gap: 1.5rem; }
+      .studio { grid-template-columns: minmax(0, 1fr); }
+      .product-rail { grid-column: 1; grid-row: auto; }
+      .product-canvas, .studio.wall .product-canvas, .focus-panel { grid-column: 1; }
+    }
+    @media (max-width: 900px) {
+      .studio { display: flex; flex-direction: column; padding: 1rem; }
+      .studio-topbar, .product-rail, .product-canvas, .focus-panel { width: 100%; }
+      .product-canvas, .studio.wall .product-canvas { gap: 1rem; padding: 0.75rem; }
+    }
+    @media (max-width: 640px) {
+      .links { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .product-canvas, .studio.wall .product-canvas { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .product-tab { min-width: 0; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+    }
   </style>
 </head>
 <body>
@@ -1430,7 +1504,11 @@
       `;
 
       const setView = (view) => {
-        viewButtons.forEach((button) => button.classList.toggle('active', button.dataset.view === view));
+        viewButtons.forEach((button) => {
+          const selected = button.dataset.view === view;
+          button.classList.toggle('active', selected);
+          button.setAttribute('aria-pressed', String(selected));
+        });
         studio?.classList.toggle('wall', view === 'wall');
       };
 
@@ -1438,7 +1516,11 @@
         const product = products[id];
         if (!product || !detailIcon || !detailTitle || !detailTagline || !detailDesc || !detailMeta || !detailAction) return;
 
-        tabs.forEach((tab) => tab.classList.toggle('active', tab.dataset.product === id));
+        tabs.forEach((tab) => {
+          const selected = tab.dataset.product === id;
+          tab.classList.toggle('active', selected);
+          tab.setAttribute('aria-pressed', String(selected));
+        });
         floatingApps.forEach((app) => app.classList.toggle('active', app.dataset.product === id));
 
         detailIcon.src = product.icon;
@@ -1478,7 +1560,10 @@
       };
 
       tabs.forEach((tab) => {
-        tab.addEventListener('click', () => selectProduct(tab.dataset.product));
+        tab.addEventListener('click', () => {
+          selectProduct(tab.dataset.product);
+          setView('focus');
+        });
       });
 
       floatingApps.forEach((app) => {
@@ -1501,7 +1586,9 @@
         });
       });
 
-      if (studio && productCanvas && matchMedia('(hover: hover) and (pointer: fine)').matches) {
+      setView('focus');
+      selectProduct('cicho');
+      if (studio && productCanvas && matchMedia('(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)').matches) {
         studio.addEventListener('pointermove', (event) => {
           const bounds = studio.getBoundingClientRect();
           const x = ((event.clientX - bounds.left) / bounds.width - 0.5) * 8;
@@ -1550,7 +1637,7 @@
         videoId: '6xuXSsEMf4g',
         title: 'Money Reveals What You Obey | Future Lesson #003',
         link: 'https://www.youtube.com/watch?v=6xuXSsEMf4g',
-        status: 'Latest video'
+        status: 'Featured video'
       };
 
       const renderVideo = ({ videoId, title, link, status }) => {
@@ -1596,8 +1683,7 @@
         const doc = new DOMParser().parseFromString(xml, 'text/xml');
         if (doc.querySelector('parsererror')) return;
 
-        const entry = doc.querySelector('entry');
-        if (!entry) return;
+        for (const entry of doc.querySelectorAll('entry')) {
 
         // YouTube RSS uses <yt:videoId> (namespaced). The <id> tag
         // contains "yt:video:VIDEO_ID" — we extract from there to avoid
@@ -1611,15 +1697,15 @@
         const publishedAt = new Date(entry.querySelector('published')?.textContent || 0);
 
         // Whitelist video ID (must be exactly 11 chars, alphanum + - + _)
-        if (!videoId || !/^[A-Za-z0-9_-]{11}$/.test(videoId)) return;
-        if (!title) return;
+        if (!videoId || !/^[A-Za-z0-9_-]{11}$/.test(videoId)) continue;
+        if (!title) continue;
 
         // Skip YouTube's auto-titled empty live streams ("X Canlı Yayını", "X Live Stream")
         // and anything published before this channel's real-content era.
         const MIN_DATE = new Date('2026-05-01');
         const isAutoLiveTitle = /(canlı\s*yayın[ıi]?|live\s*stream)$/i.test(title.trim());
-        if (isAutoLiveTitle) return;
-        if (publishedAt < MIN_DATE) return;
+        if (isAutoLiveTitle) continue;
+        if (!Number.isFinite(publishedAt.getTime()) || publishedAt < MIN_DATE) continue;
 
         // Only accept https YouTube links
         const safeLink = /^https:\/\/(www\.)?youtube\.com\//.test(link)
@@ -1627,6 +1713,8 @@
           : `https://www.youtube.com/watch?v=${videoId}`;
 
         renderVideo({ videoId, title, link: safeLink, status: 'Latest video' });
+        break;
+        }
       } catch (e) { /* silent fail — keep fallback video */ }
     })();
   </script>

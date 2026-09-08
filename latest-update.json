@@ -1,7 +1,7 @@
 {
-  "label": "Latest on X",
-  "title": "Latest build note from Tota Labs.",
-  "text": "A fresh update from the lab: what is being built, tested, or shipped right now.",
+  "label": "From X",
+  "title": "Build notes from Tota Labs.",
+  "text": "Notes on building apps and games, shared on X.",
   "url": "https://x.com/tota_labs/status/2067684949076173222?s=20",
   "cta": "Read on X →"
 }
