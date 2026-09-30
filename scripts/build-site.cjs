@@ -5,9 +5,9 @@ const root = path.resolve(__dirname, '..');
 const output = path.join(root, 'public');
 // Publish only the website, never adjacent game source or planning documents.
 const files = [
-  'index.html', 'robots.txt', 'sitemap.xml', 'app-ads.txt', 'latest-update.json',
+  'index.html', 'site.css', 'site.js', 'robots.txt', 'sitemap.xml', 'app-ads.txt', 'latest-update.json',
   'logo.png', 'og-image.png', 'cicho.png', 'ozaio.png', 'neural-blitz.png',
-  'simitci-rush.png', 'tota-finance.png', 'fornow.png', 'perihelix.svg'
+  'simitci-rush-small.png', 'tota-finance.png', 'fornow-small.png', 'perihelix.svg'
 ];
 fs.rmSync(output, { recursive: true, force: true });
 fs.mkdirSync(output, { recursive: true });
